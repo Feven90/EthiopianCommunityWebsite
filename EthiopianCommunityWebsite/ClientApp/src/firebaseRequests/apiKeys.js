@@ -1,5 +1,5 @@
 const apiKeys = {
- firebaseConfig = {
+ firebaseConfig : {
     apiKey: "AIzaSyDnX0_i_NnI0oKU3EkMIs_Z54kVxQ8F5CM",
     authDomain: "ethiopian-community.firebaseapp.com",
     databaseURL: "https://ethiopian-community.firebaseio.com",

@@ -1,19 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, FormText, Input, FormGroup, Label } from 'reactstrap';
-import authRequests from '../../firebaseRequests/auth';
+import auth from '../../firebaseRequests/auth';
 import postUser from '../../helpers/data/userRequest';
 import firebase from 'firebase';
-import RegisterBanner from '../../Images/Register.png';
+// import RegisterBanner from '../../Images/Register.png';
 
 import './Register.scss';
 
-const customerInformation = {
+const userInformation = {
   email: '',
   password: '',
   firstName: '',
-  lastName: '',
-  date: '',
+  lastName: ''
 }
 class Register extends React.Component {
   state = {
@@ -22,7 +21,8 @@ class Register extends React.Component {
 
   signUp = ( newUserInformation) => {
     firebase.auth().createUserWithEmailAndPassword(newUserInformation.email, newUserInformation.password).then((res) => {
-        newUserInformation.uid = authRequests.getUid();
+        newUserInformation.uid = auth.getUid();
+        console.log(newUserInformation.uid);
       const userInformation = { firstName: newUserInformation.firstName,
                         lastName: newUserInformation.lastName,
                         email: newUserInformation.email,
@@ -52,10 +52,6 @@ class Register extends React.Component {
     this.formFieldStringState('lastName', e);
   };
 
-  dateChange = e => {
-    this.formFieldStringState('date', e);
-  };
-
   emailChange = e => {
     this.formFieldStringState('email', e);
   }
@@ -67,18 +63,18 @@ class Register extends React.Component {
   
   formSubmit = (e) => {
     e.preventDefault();
-    const userInformation = { ...this.state.newCustomerInformation };
+    const userInformation = { ...this.state.newUserInformation };
     this.signUp(userInformation);
-    this.setState({ newCustomerInformation:customerInformation });
+    this.setState({ newUserInformation:userInformation });
   }
 
   render () {
-    const { newCustomerInformation } = this.state;
-    console.log(newCustomerInformation);
+    const { newUserInformation } = this.state;
+    console.log(newUserInformation);
     return (
       <div className="container">
         <div className="Register" id="register-form">
-        <div className="lbanner"><img className="LoginBanner" src={RegisterBanner} alt='login-banner'></img></div>
+        {/* <div className="lbanner"><img className="LoginBanner" src={RegisterBanner} alt='login-banner'></img></div> */}
           <FormGroup className="form-horizontal col-offset-3">
               <Label htmlFor="inputName" className="col-lg-12 m-1 control-label">
                 First Name:
@@ -89,7 +85,7 @@ class Register extends React.Component {
                   className="form-control"
                   id="inputEmail"
                   placeholder="First Name"
-                  value={newCustomerInformation.firstName}
+                  value={newUserInformation.firstName}
                   onChange={this.firstNameChange}
                 />
               </div>
@@ -102,7 +98,7 @@ class Register extends React.Component {
                   className="form-control"
                   id="inputEmail"
                   placeholder="Last Name"
-                  value={newCustomerInformation.lastName}
+                  value={newUserInformation.lastName}
                   onChange={this.lastNameChange}
                 />
               </div>
@@ -115,7 +111,7 @@ class Register extends React.Component {
                   className="form-control"
                   id="inputEmail"
                   placeholder="Email"
-                  value={newCustomerInformation.email}
+                  value={newUserInformation.email}
                   onChange={this.emailChange}
                 />
               <FormText>Please use a valid email address.</FormText>
@@ -129,7 +125,7 @@ class Register extends React.Component {
                   className="form-control"
                   id="inputPassword"
                   placeholder="Password"
-                  value={newCustomerInformation.password}
+                  value={newUserInformation.password}
                   onChange={this.passwordChange}
                 />
               <FormText>Your password should be longer than 8 characters.</FormText>

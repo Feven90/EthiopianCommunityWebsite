@@ -3,24 +3,16 @@ import {Route, BrowserRouter, Redirect, Switch}  from 'react-router-dom';
 import firebase from 'firebase';
 import connection from '../firebaseRequests/connection';
 import Home from '../components/Home/Home';
-import CustomerProfile from '../components/CustomerProfile/CustomerProfile';
 import Login from '../components/Login/Login';
 import MyNavbar from '../components/Navbar/Navbar';
-import Dinosaurs from '../components/pages/Dinosaurs';
-import Sweaters from '../components/pages/Sweaters';
-import Fences from '../components/pages/Fences';
-import AccountHome from '../components/AccountHome/AccountHome';
+import UserProfile from '../components/UserProfile/UserProfile';
+import Event from '../components/Event/Event';
+
 import Register from '../components/Register/Register';
-import OrderHistory from '../components/OrderHistory/OrderHistory';
 import fbConnection from '../firebaseRequests/connection';
-import './App.scss';
-import ShoppingCart from '../components/ShoppingCart/ShoppingCart';
-import PaymentInformation from '../components/PaymentInformation/PaymentInformation';
-import WishList from '../components/WishList/WishList';
-import customerRequest from '../helpers/data/customerRequest';
 import autheRequests from '../firebaseRequests/auth';
-import Checkout from '../components/Checkout/Checkout';
-import paymentRequest from '../helpers/data/paymentInformationRequest';
+import './App.scss';
+import userRequest from '../helpers/data/userRequest';
 
 
 fbConnection();
@@ -74,8 +66,9 @@ const PrivateRoute = ({ component: Component, authed, ...rest }) => {
 class App extends React.Component {
   state={
     authed: false,
-    customer: '',
-    paymentInfo: ''
+    user: '',
+    paymentInfo: '', 
+    isAdmin: false
   }
 
   componentDidMount() {
@@ -85,14 +78,14 @@ class App extends React.Component {
         this.setState({
           authed: true,
         });
-//         let uid = autheRequests.getUid();
-//         customerRequest.getCustomerProfile(uid).then((customer) => {
-//             this.setState({ customer });
-//   paymentRequest.getPaymentInformation(customer.id).then((paymentInfo) => {
+        let uid = autheRequests.getUid();
+        userRequest.getUserProfile(uid).then((user) => {
+            this.setState({ user });
+//   paymentRequest.getPaymentInformation(user.id).then((paymentInfo) => {
 //     this.setState({ paymentInfo})
-//     console.log(customer.id);
+//     console.log(user.id);
 // })
-//       });
+      });
       } else {
         this.setState({
           authed: false,
@@ -102,10 +95,10 @@ class App extends React.Component {
 }
 
 // getCustomerPayment = () => {
-//   const { customer } = this.state;
-//   paymentRequest.getPaymentInformation(customer.id).then((paymentInfo) => {
+//   const { user } = this.state;
+//   paymentRequest.getPaymentInformation(user.id).then((paymentInfo) => {
 //     this.setState({ paymentInfo})
-//     console.log(customer.id);
+//     console.log(user.id);
 // })
 // }
   componentWillUnmount () {
@@ -119,7 +112,7 @@ class App extends React.Component {
   render () {
     const {
       authed, 
-      customer
+      user
     } = this.state 
 
     if (!authed) {
@@ -145,6 +138,8 @@ class App extends React.Component {
       )
     }
 
+    
+
     return (
       <div className="App">
         <BrowserRouter>
@@ -155,9 +150,9 @@ class App extends React.Component {
             />
                 <Switch>
                   <Route path="/" exact component={Home}/>
-                  <PrivateRoute path='/customerprofile' exact component={CustomerProfile} authed={this.state.authed} />
+                  <PrivateRoute path='/userProfile' exact component={UserProfile} authed={this.state.authed} />
                   <PrivateRoute path='/home' exact component={Home} authed={this.state.authed} />
-
+                  <PrivateRoute path='/event' exact component={Event} authed={this.state.authed} user={this.state.user} />
 
                   {/* <PrivateRoute exact path="/checkout" authed={this.state.authed} component={props => <Checkout {...props} paymentInfo={paymentInfo}/>}/> */}
                 </Switch>

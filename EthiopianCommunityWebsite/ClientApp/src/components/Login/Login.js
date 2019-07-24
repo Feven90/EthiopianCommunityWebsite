@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, FormText, Input, FormGroup, Label } from 'reactstrap';
-import LoginBanner from '../../Images/Login.png';
+// import LoginBanner from '../../Images/Login.png';
 import authRequests from '../../firebaseRequests/auth';
 
 import './Login.scss';
@@ -60,7 +60,7 @@ class Login extends React.Component {
     return (
       <div className="container Login">
         <div className="loginForm" id="login-form">
-          <div className="lbanner"><img className="LoginBanner" src={LoginBanner} alt='login-banner'></img></div>
+          {/* <div className="lbanner"><img className="LoginBanner" src={LoginBanner} alt='login-banner'></img></div> */}
           <FormGroup className="form-horizontal col-sm-offset-3">
             <Label htmlFor="inputEmail" className=" m-1 control
             -label">

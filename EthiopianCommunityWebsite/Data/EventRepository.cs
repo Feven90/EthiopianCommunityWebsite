@@ -8,67 +8,63 @@ using System.Threading.Tasks;
 
 namespace EthiopianCommunityWebsite.Data
 {
-    public class UserRepository
+    public class EventRepository
     {
         const string ConnectionString = "Server=localhost;Database=EthioCommunity;Trusted_Connection=True;";
 
-        public User AddUser(User userInfo)
+        public Event AddEvent(Event eventInfo)
         {
             using (var db = new SqlConnection(ConnectionString))
             {
 
-                var addUserInformation = db.QueryFirstOrDefault<User>(@"
-                    Insert into [user] (firstName,lastName, date, phoneNumber, city, address, state, zipcode, userUid, email)
+                var addEventInformation = db.QueryFirstOrDefault<Event>(@"
+                    Insert into [event] (eventName, address, time, userId)
                     Output inserted.*
-                    Values(@firstName,@lastName,@date, @phoneNumber, @city, @address, @state, @zipcode,@userUid,@email)",
-                    new { firstName = userInfo.FirstName,
-                        lastName = userInfo.LastName,
-                        date = DateTime.Now,
-                        phoneNumber = userInfo.PhoneNumber,
-                        city = userInfo.City,
-                        address = userInfo.Address,
-                        state = userInfo.State,
-                        zipcode = userInfo.Zipcode,
-                        email = userInfo.Email,
-                        userUid = userInfo.UserUid
+                    Values(@eventName, @address, @time, @userId)",
+                    new
+                    {
+                        eventName = eventInfo.EventName,
+                        address = eventInfo.Address,
+                        time = eventInfo.Time,
+                        userId = eventInfo.UserId,
                     });
 
 
-                if (addUserInformation != null)
+                if (addEventInformation != null)
                 {
-                    return addUserInformation;
+                    return addEventInformation;
                 }
             }
 
             throw new Exception("No user created");
         }
-        public IEnumerable<User> GetUsers()
+        public IEnumerable<Event> GetEvents()
         {
             using (var db = new SqlConnection(ConnectionString))
             {
-                var allUsers = db.Query<User>(@"Select * from [User]").ToList();
-                return allUsers;
+                var allEvents = db.Query<Event>(@"Select * from [Event]").ToList();
+                return allEvents;
             }
         }
-        public User GetSingleUser(string userUid)
+        public Event GetSingleEvent(string userUid)
         {
             using (var db = new SqlConnection(ConnectionString))
             {
-                var allUsers = db.QueryFirstOrDefault<User>(@"Select * 
-                                                      from [User]
+                var allEvents = db.QueryFirstOrDefault<Event>(@"Select * 
+                                                      from [Event]
                                                        Where userUid = @userUid",
                                                        new { userUid });
 
-                return allUsers;
+                return allEvents;
             }
         }
 
-        public User UpdateUser(User UserInformation)
+        public Event UpdateEvent(Event EventInformation)
         {
             using (var db = new SqlConnection(ConnectionString))
             {
 
-                var updateUser = db.QueryFirstOrDefault<User>(@"Update User
+                var updateEvent = db.QueryFirstOrDefault<Event>(@"Update Event
                             Set firstName = @firstName,
                                 lastName = @lastName,
                                 date = @date,
@@ -80,12 +76,13 @@ namespace EthiopianCommunityWebsite.Data
                                 email = @email,
                                 output inserted.*
                             Where userUid = @userUid",
-                           UserInformation);
+                           EventInformation);
 
-                return updateUser;
+                return updateEvent;
             }
             throw new Exception("Could not update user");
         }
 
     }
 }
+

@@ -8,7 +8,7 @@ namespace EthiopianCommunityWebsite.Models
     public class User
     {
         public int id { get; }
-        public string UserUid { get; }
+        public string UserUid { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -19,6 +19,7 @@ namespace EthiopianCommunityWebsite.Models
         public string City { get; set; }
         public DateTime Date { get; set; }
         public int Zipcode { get; set; }
+        public int isAdmin { get; set; }
 
 
     }

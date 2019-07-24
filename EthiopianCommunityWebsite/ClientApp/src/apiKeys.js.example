@@ -1,5 +1,5 @@
 const apiKeys = {
-    firebaseConfig = {
+    firebaseConfig : {
        apiKey: "",
        authDomain: "",
        databaseURL: "",
