@@ -5,6 +5,7 @@ import {
     TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col,
   } from 'reactstrap';
 import './Event.scss';
+import EventItem from '../EventItem/EventItem';
 import { Link } from 'react-router-dom';
 import HeaderImg from "../../Images/community1.jpg";
 
@@ -13,7 +14,7 @@ const defaultEvent = {
     eventName: '',
     address: '',
     time: '',
-    userId: 1,
+    userId: 9,
     }
 
 class Event extends React.Component {
@@ -21,7 +22,7 @@ class Event extends React.Component {
         open: false,
         addNewEvent: defaultEvent,
         paymentType: '',
-        event: []
+        events: [], 
     }
     onOpenModal = () => {
         this.setState({ open: true });
@@ -33,9 +34,13 @@ class Event extends React.Component {
 
       componentDidMount() {
         //const uid = authRequest.getUid();
-        eventRequest.getEvents().then((event) => {
-          this.setState({ event })
-          console.log(event);
+        this.eventInfo();
+    }
+
+    eventInfo = () => {
+        eventRequest.getEvents().then((events) => {
+            this.setState({ events });
+            console.log(events);
         });
     }
 
@@ -77,9 +82,19 @@ class Event extends React.Component {
           }
         
     render() {
-        const { open, addNewEvent } = this.state;
+        const { open, addNewEvent, events } = this.state;
         const { user, authed } = this.props;
-        console.log(addNewEvent);
+        console.log(user);
+
+
+        const eventItem = events.map(event => (
+            <EventItem
+            event={event}
+              key={events.id}
+              user={user}
+            //   deleteOneProduct={this.deleteOneProduct}
+            />
+          ));
         return (
             <div>
 
@@ -194,8 +209,8 @@ class Event extends React.Component {
                         (
                             <h1>All Events</h1>
                         )
-                    
                 }
+                  { eventItem}
             </div>
         )
     }

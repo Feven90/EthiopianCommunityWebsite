@@ -6,6 +6,7 @@ const getEvents = () => new Promise((resolve, reject) => {
       .then((res) => {
         let event = res.data;
         resolve(event);
+        console.log(event);
       })
       .catch(err => reject(err));
   });
