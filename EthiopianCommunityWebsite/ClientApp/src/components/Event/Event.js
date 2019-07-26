@@ -1,8 +1,11 @@
 import React from 'react';
 import eventRequest from '../../helpers/data/eventRequest';
 import Modal from 'react-responsive-modal';
-import {
-    TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col,
+// import {
+//     TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col,
+//   } from 'reactstrap';
+  import {
+     Button
   } from 'reactstrap';
 import './Event.scss';
 import EventItem from '../EventItem/EventItem';
@@ -23,7 +26,15 @@ class Event extends React.Component {
         addNewEvent: defaultEvent,
         paymentType: '',
         events: [], 
+        eventId:''
     }
+
+    selectedEvent = (e) => {
+      const value = e.target.getAttribute("id");
+      this.setState({ eventId: value })
+      console.log(value);
+      }
+
     onOpenModal = () => {
         this.setState({ open: true });
       };
@@ -40,7 +51,6 @@ class Event extends React.Component {
     eventInfo = () => {
         eventRequest.getEvents().then((events) => {
             this.setState({ events });
-            console.log(events);
         });
     }
 
@@ -81,10 +91,10 @@ class Event extends React.Component {
             this.setState({ addNewEvent:defaultEvent });
           }
         
+
     render() {
         const { open, addNewEvent, events } = this.state;
         const { user, authed } = this.props;
-        console.log(user);
 
 
         const eventItem = events.map(event => (
@@ -92,6 +102,7 @@ class Event extends React.Component {
             event={event}
               key={events.id}
               user={user}
+              selectedEvent={this.selectedEvent}
             //   deleteOneProduct={this.deleteOneProduct}
             />
           ));
@@ -105,7 +116,7 @@ class Event extends React.Component {
                      <Modal open={open} onClose={this.onCloseModal} center>
                      <div className="Register">
                              <div id="">                              {/* login-form */}
-                               <h1 className="text-center">Add Card</h1>
+                               <h1 className="text-center">Add Event</h1>
                                <form className="form-horizontal col-sm-6 ">
                                  <div className="form-group">
                                    <label htmlFor="inputName" className=" control-label">

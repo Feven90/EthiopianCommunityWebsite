@@ -9,8 +9,14 @@ class EventItem extends React.Component {
     //     const { deleteOneProduct, customerProduct } = this.props;
     //     deleteOneProduct(customerProduct.productId);
     //   }
+
+    registerForEvent = (e) => {
+        var getId = e.target.value;
+
+    }
+
     render() {
-        const { event, user } = this.props;
+        const { event, user} = this.props;
         console.log(event);
         return(
             <div>
@@ -19,7 +25,7 @@ class EventItem extends React.Component {
                 <div className="cart-img">
                     {/* <img className="cartProduct" src={customerProduct.image} alt="cart items"/> */}
                 <h1>{event.eventName}</h1>
-                <button>Register</button> 
+                <Button id={event.id} onClick={this.props.selectedEvent}>Register</Button> 
                 </div>
                 <div className="product-description">
                     {/* <h5>Title:{customerProduct.title}</h5>
