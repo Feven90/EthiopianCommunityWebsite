@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 
 namespace EthiopianCommunityWebsite.Models
 {
-    public class Event
+    public class VolunteerService
     {
         public int Id { get; set; }
-        public string EventName { get; set; }
-        public string Address { get; set; }
-        public string Time { get; set; }
+        public string VolunteerServiceType { get; set; }
     }
 }

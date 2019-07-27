@@ -81,6 +81,7 @@ class App extends React.Component {
         let uid = autheRequests.getUid();
         userRequest.getUserProfile(uid).then((user) => {
             this.setState({ user });
+            console.log(user);
 //   paymentRequest.getPaymentInformation(user.id).then((paymentInfo) => {
 //     this.setState({ paymentInfo})
 //     console.log(user.id);
@@ -139,7 +140,6 @@ class App extends React.Component {
     }
 
     
-
     return (
       <div className="App">
         <BrowserRouter>

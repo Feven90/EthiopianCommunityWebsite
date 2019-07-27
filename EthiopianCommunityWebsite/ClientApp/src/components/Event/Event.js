@@ -1,10 +1,16 @@
+import $ from 'jquery';
 import React from 'react';
 import eventRequest from '../../helpers/data/eventRequest';
+import serviceRequest from '../../helpers/data/volunteerServiceRequest';
 import Modal from 'react-responsive-modal';
-import {
-    TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col,
+// import {
+//     TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col,
+//   } from 'reactstrap';
+  import {
+     Button, Input
   } from 'reactstrap';
 import './Event.scss';
+import EventItem from '../EventItem/EventItem';
 import { Link } from 'react-router-dom';
 import HeaderImg from "../../Images/community1.jpg";
 
@@ -12,17 +18,30 @@ import HeaderImg from "../../Images/community1.jpg";
 const defaultEvent = {
     eventName: '',
     address: '',
-    time: '',
-    userId: 1,
+    time: ''
     }
+
+const defaultService = {
+  volunteerSerivceType: ''
+}
 
 class Event extends React.Component {
     state = {
         open: false,
         addNewEvent: defaultEvent,
         paymentType: '',
-        event: []
+        events: [], 
+        eventId:'',
+        check: false,
+        addNewServiceType: defaultService
     }
+
+    selectedEvent = (e) => {
+      const value = e.target.getAttribute("id");
+      this.setState({ eventId: value })
+      console.log(value);
+      }
+
     onOpenModal = () => {
         this.setState({ open: true });
       };
@@ -33,17 +52,23 @@ class Event extends React.Component {
 
       componentDidMount() {
         //const uid = authRequest.getUid();
-        eventRequest.getEvents().then((event) => {
-          this.setState({ event })
-          console.log(event);
-        });
+        this.eventInfo();
     }
 
-      addEvent = (event) => {
-        const { addNewEvent , user, paymentType} = this.state;
-        eventRequest.postEventRequest(event).then(() => {
+    eventInfo = () => {
+        eventRequest.getEvents().then((events) => {
+            this.setState({ events });
+        });
+    }
+    addVolunteerService = (service) => {
+      serviceRequest.postVolunteerServiceRequest(service).then(() => {
         })
-        }
+      }
+    addEvent = (event) => {
+      eventRequest.postEventRequest(event).then(() => {
+      })
+      }
+      
 
         formFieldStringState = (name,e) => {
             e.preventDefault();
@@ -51,7 +76,17 @@ class Event extends React.Component {
             tempInfo[name] = e.target.value;
             this.setState({ addNewEvent: tempInfo});
           }
-          
+
+        formVolunteerStringState = (service,e) => {
+          e.preventDefault();
+          const tempInfo = { ...this.state.volunteerServiceType};
+          tempInfo[service] = e.target.value;
+          this.setState({ addNewServiceType : tempInfo });
+        }
+          volunteerServiceChange = e => {
+            this.formVolunteerStringState('volunteerServiceType', e);
+          }
+
           eventChange = e => {
             this.formFieldStringState('eventName', e);
           };
@@ -67,19 +102,40 @@ class Event extends React.Component {
         //   expirationDateChange = e => {
         //     this.formFieldStringState('expirationDate', e);
         //   };
+       showOrHideForm = () => {
+          $("#toggle-form").click(function() {
+            $("#volunteer-services").toggle();
+          });
+        }
+       
         
           formSubmit = (e) => {
             e.preventDefault();
             const eventInformation = { ...this.state.addNewEvent };
-
+            const volunteerSerivceInformation = { ...this.state.addNewServiceType}
             this.addEvent(eventInformation);
+            this.addVolunteerService(volunteerSerivceInformation);
+            this.setState({ addNewServiceType: defaultService})
             this.setState({ addNewEvent:defaultEvent });
           }
-        
+        checkBoxValue = () => {
+          this.setState({ check: !this.state.check })
+        }
+
     render() {
-        const { open, addNewEvent } = this.state;
+        const { open, addNewEvent, events, addNewServiceType } = this.state;
         const { user, authed } = this.props;
-        console.log(addNewEvent);
+
+
+        const eventItem = events.map(event => (
+            <EventItem
+            event={event}
+              key={events.id}
+              user={user}
+              selectedEvent={this.selectedEvent}
+            //   deleteOneProduct={this.deleteOneProduct}
+            />
+          ));
         return (
             <div>
 
@@ -90,7 +146,7 @@ class Event extends React.Component {
                      <Modal open={open} onClose={this.onCloseModal} center>
                      <div className="Register">
                              <div id="">                              {/* login-form */}
-                               <h1 className="text-center">Add Card</h1>
+                               <h1 className="text-center">Add Event</h1>
                                <form className="form-horizontal col-sm-6 ">
                                  <div className="form-group">
                                    <label htmlFor="inputName" className=" control-label">
@@ -136,6 +192,25 @@ class Event extends React.Component {
                                        onChange={this.timeChange}
                                      />
                                    </div>
+                                 </div>
+                                 <button type="button" onClick={this.showOrHideForm} id="toggle-form">Toggle Form!</button>
+
+                                 <div id="volunteer-services">
+                                <label htmlFor="inputLastName" className="control-label">
+                                     volunteer Service:
+                                </label>
+                                   <div className="">
+                                     <input
+                                       type="name"
+                                       className="form-control"
+                                       id="inputText"
+                                       placeholder="teaching"
+                                       value={addNewServiceType.volunteerServiceType}
+                                       onChange={this.volunteerServiceChange}
+                                     />      
+                                     </div> 
+                                     <Input type="checkbox" value={this.state.check} onChange={this.checkBoxValue} />                           
+
                                  </div>
                                  {/* <div className="form-group">
                                    <label htmlFor="inputLastName" className="control-label">
@@ -194,8 +269,8 @@ class Event extends React.Component {
                         (
                             <h1>All Events</h1>
                         )
-                    
                 }
+                  { eventItem}
             </div>
         )
     }
