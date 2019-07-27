@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import React from 'react';
 import eventRequest from '../../helpers/data/eventRequest';
 import Modal from 'react-responsive-modal';
@@ -5,7 +6,7 @@ import Modal from 'react-responsive-modal';
 //     TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col,
 //   } from 'reactstrap';
   import {
-     Button
+     Button, Input
   } from 'reactstrap';
 import './Event.scss';
 import EventItem from '../EventItem/EventItem';
@@ -20,13 +21,19 @@ const defaultEvent = {
     userId: 9,
     }
 
+const defaultService = {
+  volunteerSerivceType: ''
+}
+
 class Event extends React.Component {
     state = {
         open: false,
         addNewEvent: defaultEvent,
         paymentType: '',
         events: [], 
-        eventId:''
+        eventId:'',
+        check: false,
+        addNewServiceType: defaultService
     }
 
     selectedEvent = (e) => {
@@ -53,12 +60,15 @@ class Event extends React.Component {
             this.setState({ events });
         });
     }
-
+    addVolunteerService = (service) => {
+      eventRequest.postEventRequest(service).then(() => {
+        })
+      }
       addEvent = (event) => {
-        const { addNewEvent , user, paymentType} = this.state;
         eventRequest.postEventRequest(event).then(() => {
         })
         }
+      
 
         formFieldStringState = (name,e) => {
             e.preventDefault();
@@ -66,7 +76,17 @@ class Event extends React.Component {
             tempInfo[name] = e.target.value;
             this.setState({ addNewEvent: tempInfo});
           }
-          
+
+        formVolunteerStringState = (service,e) => {
+          e.preventDefault();
+          const tempInfo = { ...this.state.volunteerServiceType};
+          tempInfo[service] = e.target.value;
+          this.setState({ addNewServiceType : tempInfo });
+        }
+          volunteerServiceChange = e => {
+            this.formVolunteerStringState('volunteerServiceType', e);
+          }
+
           eventChange = e => {
             this.formFieldStringState('eventName', e);
           };
@@ -82,18 +102,28 @@ class Event extends React.Component {
         //   expirationDateChange = e => {
         //     this.formFieldStringState('expirationDate', e);
         //   };
+       showOrHideForm = () => {
+          $("#toggle-form").click(function() {
+            $("#volunteer-services").toggle();
+          });
+        }
+       
         
           formSubmit = (e) => {
             e.preventDefault();
             const eventInformation = { ...this.state.addNewEvent };
-
+            const volunteerSerivceInformation = { ...this.state.addNewServiceType}
             this.addEvent(eventInformation);
+            this.addVolunteerService(volunteerSerivceInformation);
+            this.setState({ addNewServiceType: defaultService})
             this.setState({ addNewEvent:defaultEvent });
           }
-        
+        checkBoxValue = () => {
+          this.setState({ check: !this.state.check })
+        }
 
     render() {
-        const { open, addNewEvent, events } = this.state;
+        const { open, addNewEvent, events, addNewServiceType } = this.state;
         const { user, authed } = this.props;
 
 
@@ -162,6 +192,25 @@ class Event extends React.Component {
                                        onChange={this.timeChange}
                                      />
                                    </div>
+                                 </div>
+                                 <button type="button" onClick={this.showOrHideForm} id="toggle-form">Toggle Form!</button>
+
+                                 <div id="volunteer-services">
+                                <label htmlFor="inputLastName" className="control-label">
+                                     volunteer Service:
+                                </label>
+                                   <div className="">
+                                     <input
+                                       type="name"
+                                       className="form-control"
+                                       id="inputText"
+                                       placeholder="teaching"
+                                       value={addNewServiceType.volunteerServiceType}
+                                       onChange={this.volunteerServiceChange}
+                                     />      
+                                     </div> 
+                                     <Input type="checkbox" value={this.state.check} onChange={this.checkBoxValue} />                           
+
                                  </div>
                                  {/* <div className="form-group">
                                    <label htmlFor="inputLastName" className="control-label">

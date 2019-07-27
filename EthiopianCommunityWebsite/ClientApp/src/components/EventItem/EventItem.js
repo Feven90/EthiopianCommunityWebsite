@@ -17,14 +17,15 @@ class EventItem extends React.Component {
 
     render() {
         const { event, user} = this.props;
-        console.log(event);
         return(
             <div>
 
             <div className="cart-item">
-                <div className="cart-img">
+                <div className="cart-img card">
                     {/* <img className="cartProduct" src={customerProduct.image} alt="cart items"/> */}
                 <h1>{event.eventName}</h1>
+                <h3>{event.time}</h3>
+                <h3>{event.address}</h3>
                 <Button id={event.id} onClick={this.props.selectedEvent}>Register</Button> 
                 </div>
                 <div className="product-description">
