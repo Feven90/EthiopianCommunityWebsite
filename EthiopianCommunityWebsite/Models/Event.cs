@@ -11,6 +11,5 @@ namespace EthiopianCommunityWebsite.Models
         public string EventName { get; set; }
         public string Address { get; set; }
         public string Time { get; set; }
-        public int UserId { get; set; }
     }
 }

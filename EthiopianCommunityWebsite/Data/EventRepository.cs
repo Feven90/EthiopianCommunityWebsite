@@ -18,15 +18,14 @@ namespace EthiopianCommunityWebsite.Data
             {
 
                 var addEventInformation = db.QueryFirstOrDefault<Event>(@"
-                    Insert into [event] (eventName, address, time, userId)
+                    Insert into [event] (eventName, address, time)
                     Output inserted.*
-                    Values(@eventName, @address, @time, @userId)",
+                    Values(@eventName, @address, @time)",
                     new
                     {
                         eventName = eventInfo.EventName,
                         address = eventInfo.Address,
                         time = eventInfo.Time,
-                        userId = eventInfo.UserId,
                     });
 
 

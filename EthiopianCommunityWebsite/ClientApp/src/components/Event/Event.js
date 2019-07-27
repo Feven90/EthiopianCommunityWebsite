@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import React from 'react';
 import eventRequest from '../../helpers/data/eventRequest';
+import serviceRequest from '../../helpers/data/volunteerServiceRequest';
 import Modal from 'react-responsive-modal';
 // import {
 //     TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col,
@@ -17,8 +18,7 @@ import HeaderImg from "../../Images/community1.jpg";
 const defaultEvent = {
     eventName: '',
     address: '',
-    time: '',
-    userId: 9,
+    time: ''
     }
 
 const defaultService = {
@@ -61,13 +61,13 @@ class Event extends React.Component {
         });
     }
     addVolunteerService = (service) => {
-      eventRequest.postEventRequest(service).then(() => {
+      serviceRequest.postVolunteerServiceRequest(service).then(() => {
         })
       }
-      addEvent = (event) => {
-        eventRequest.postEventRequest(event).then(() => {
-        })
-        }
+    addEvent = (event) => {
+      eventRequest.postEventRequest(event).then(() => {
+      })
+      }
       
 
         formFieldStringState = (name,e) => {
