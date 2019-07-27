@@ -33,26 +33,30 @@ class Event extends React.Component {
         events: [], 
         eventId:'',
         check: false,
-        addNewServiceType: defaultService
+        addNewServiceType: defaultService,
+        services: []
     }
 
     selectedEvent = (e) => {
       const value = e.target.getAttribute("id");
       this.setState({ eventId: value })
       console.log(value);
-      }
+    }
 
     onOpenModal = () => {
-        this.setState({ open: true });
-      };
-     
-      onCloseModal = () => {
-        this.setState({ open: false });
-      };
+      this.setState({ open: true });
+    };
+    
+    onCloseModal = () => {
+      this.setState({ open: false });
+    };
 
-      componentDidMount() {
+    componentDidMount() {
         //const uid = authRequest.getUid();
         this.eventInfo();
+        serviceRequest.getVolunteerService().then((services) => {
+        this.setState({ services })
+        })
     }
 
     eventInfo = () => {
@@ -63,67 +67,72 @@ class Event extends React.Component {
     addVolunteerService = (service) => {
       serviceRequest.postVolunteerServiceRequest(service).then(() => {
         })
-      }
+    }
+
     addEvent = (event) => {
       eventRequest.postEventRequest(event).then(() => {
       })
-      }
+    }
+
       
 
-        formFieldStringState = (name,e) => {
-            e.preventDefault();
-            const tempInfo = { ...this.state.addNewEvent};
-            tempInfo[name] = e.target.value;
-            this.setState({ addNewEvent: tempInfo});
-          }
+    formFieldStringState = (name,e) => {
+        e.preventDefault();
+        const tempInfo = { ...this.state.addNewEvent};
+        tempInfo[name] = e.target.value;
+        this.setState({ addNewEvent: tempInfo});
+    }
 
-        formVolunteerStringState = (service,e) => {
-          e.preventDefault();
-          const tempInfo = { ...this.state.volunteerServiceType};
-          tempInfo[service] = e.target.value;
-          this.setState({ addNewServiceType : tempInfo });
-        }
-          volunteerServiceChange = e => {
-            this.formVolunteerStringState('volunteerServiceType', e);
-          }
+    formVolunteerStringState = (service,e) => {
+      e.preventDefault();
+      const tempInfo = { ...this.state.volunteerServiceType};
+      tempInfo[service] = e.target.value;
+      this.setState({ addNewServiceType : tempInfo });
+    }
 
-          eventChange = e => {
-            this.formFieldStringState('eventName', e);
-          };
-        
-          addressChange = e => {
-            this.formFieldStringState('address', e);
-          };
-          
-          timeChange = e => {
-            this.formFieldStringState('time', e);
-          };
+    volunteerServiceChange = e => {
+      this.formVolunteerStringState('volunteerServiceType', e);
+    }
+
+    eventChange = e => {
+      this.formFieldStringState('eventName', e);
+    };
+  
+    addressChange = e => {
+      this.formFieldStringState('address', e);
+    };
+    
+    timeChange = e => {
+      this.formFieldStringState('time', e);
+    };
 
         //   expirationDateChange = e => {
         //     this.formFieldStringState('expirationDate', e);
         //   };
-       showOrHideForm = () => {
-          $("#toggle-form").click(function() {
-            $("#volunteer-services").toggle();
-          });
-        }
+    showOrHideForm = () => {
+      $("#toggle-form").click(function() {
+        $("#volunteer-services").toggle();
+      });
+    }
        
         
-          formSubmit = (e) => {
-            e.preventDefault();
-            const eventInformation = { ...this.state.addNewEvent };
-            const volunteerSerivceInformation = { ...this.state.addNewServiceType}
-            this.addEvent(eventInformation);
-            this.addVolunteerService(volunteerSerivceInformation);
-            this.setState({ addNewServiceType: defaultService})
-            this.setState({ addNewEvent:defaultEvent });
-          }
-        checkBoxValue = () => {
-          this.setState({ check: !this.state.check })
-        }
+    formSubmit = (e) => {
+      e.preventDefault();
+      const eventInformation = { ...this.state.addNewEvent };
+      // const volunteerSerivceInformation = { ...this.state.addNewServiceType}
+      this.addEvent(eventInformation);
+      // this.addVolunteerService(volunteerSerivceInformation);
+      // this.setState({ addNewServiceType: defaultService})
+      this.setState({ addNewEvent:defaultEvent });
+    }
+
+    checkBoxValue = () => {
+      this.setState({ check: !this.state.check })
+    }
 
     render() {
-        const { open, addNewEvent, events, addNewServiceType } = this.state;
+        const { open, addNewEvent, events, addNewServiceType, services } = this.state;
+        console.log(services);
         const { user, authed } = this.props;
 
 
@@ -135,14 +144,27 @@ class Event extends React.Component {
               selectedEvent={this.selectedEvent}
             //   deleteOneProduct={this.deleteOneProduct}
             />
-          ));
+        ));
+        // const serviceitem = services.map(service => (
+        //   service={service}
+        // ));
+
+        const serviceCheckboxes = services.map((service,i) => {
+          console.log("the service", service)
+          return (
+            <label key={i}>
+              <h4>{service.volunteerServiceType}</h4>
+              <Input type="checkbox" name={service.volunteerServiceType}  onChange={this.checkBoxValue} />
+            </label>
+          );
+        })
+        
         return (
             <div>
-
                 {
                     (user.isAdmin) ? (
                         <div className="addPayment">
-                        <button onClick={this.onOpenModal} className="btn" id="buttonOh">Add Event</button>
+                        <button onClick={this.onOpenModal} className="btn" id="buttonOh">Add my Event</button>
                      <Modal open={open} onClose={this.onCloseModal} center>
                      <div className="Register">
                              <div id="">                              {/* login-form */}
@@ -208,9 +230,9 @@ class Event extends React.Component {
                                        value={addNewServiceType.volunteerServiceType}
                                        onChange={this.volunteerServiceChange}
                                      />      
-                                     </div> 
-                                     <Input type="checkbox" value={this.state.check} onChange={this.checkBoxValue} />                           
-
+                                     </div>
+                                     {serviceCheckboxes}
+                                     {/* <Input type="checkbox" value={this.state.check} onChange={this.checkBoxValue}>{serviceitem}</Input>                            */}
                                  </div>
                                  {/* <div className="form-group">
                                    <label htmlFor="inputLastName" className="control-label">
