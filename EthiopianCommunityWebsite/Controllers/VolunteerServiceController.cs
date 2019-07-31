@@ -13,25 +13,31 @@ namespace EthiopianCommunityWebsite.Controllers
     [ApiController]
     public class VolunteerServiceController : ControllerBase
     {
-       
-            readonly VolunteerServiceRepository _volunteerServiceRepository;
-            //readonly CreateUserRequestValidator _validator;
-            // readonly CreateCustomerProductValidator _customerProductValidator;
 
-            // GET: /<controller>/
-            public VolunteerServiceController()
-            {
+        readonly VolunteerServiceRepository _volunteerServiceRepository;
+        //readonly CreateUserRequestValidator _validator;
+        // readonly CreateCustomerProductValidator _customerProductValidator;
+
+        // GET: /<controller>/
+        public VolunteerServiceController()
+        {
             //_validator = new CreateCustomerRequestValidator();
             _volunteerServiceRepository = new VolunteerServiceRepository();
-            }
-            [HttpPost("register")]
-            public ActionResult AddCustomer(VolunteerService createRequest)
-            {
-                //if (_validator.Validate(createRequest))
-                //    return BadRequest(new { error = "customer must have a First Name, Last Name and Email " });
-                var newVolunteerService = _volunteerServiceRepository.AddVolunteerService(createRequest);
-                return Created($"/api/volunteerService", newVolunteerService);
-
-            }
         }
+        [HttpPost("register")]
+        public ActionResult AddCustomer(VolunteerService createRequest)
+        {
+            //if (_validator.Validate(createRequest))
+            //    return BadRequest(new { error = "customer must have a First Name, Last Name and Email " });
+            var newVolunteerService = _volunteerServiceRepository.AddVolunteerService(createRequest);
+            return Created($"/api/volunteerService", newVolunteerService);
+
+        }
+        [HttpGet("allServices")]
+        public ActionResult GetVolunteerService()
+        {
+            var allServices = _volunteerServiceRepository.GetVolunteerService();
+            return Ok(allServices);
+        }
+    }
 }
