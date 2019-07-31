@@ -11,5 +11,6 @@ namespace EthiopianCommunityWebsite.Models
         public string EventName { get; set; }
         public string Address { get; set; }
         public string Time { get; set; }
+        public List<EventVolunteerService> EventVolunteerServices { get; set; }
     }
 }

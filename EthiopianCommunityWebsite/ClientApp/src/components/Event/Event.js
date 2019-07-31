@@ -34,7 +34,9 @@ class Event extends React.Component {
         eventId:'',
         check: false,
         addNewServiceType: defaultService,
-        services: []
+        services: [],
+        showVolunteerServices: false,
+        selectedServiceIds: []
     }
 
     selectedEvent = (e) => {
@@ -74,6 +76,9 @@ class Event extends React.Component {
       })
     }
 
+    getClickedCheckboxs = (e) => {
+      var getId = e.target.id;
+    }
       
 
     formFieldStringState = (name,e) => {
@@ -106,13 +111,8 @@ class Event extends React.Component {
       this.formFieldStringState('time', e);
     };
 
-        //   expirationDateChange = e => {
-        //     this.formFieldStringState('expirationDate', e);
-        //   };
     showOrHideForm = () => {
-      $("#toggle-form").click(function() {
-        $("#volunteer-services").toggle();
-      });
+      this.setState({showVolunteerServices: !this.state.showVolunteerServices})
     }
        
         
@@ -124,14 +124,31 @@ class Event extends React.Component {
       // this.addVolunteerService(volunteerSerivceInformation);
       // this.setState({ addNewServiceType: defaultService})
       this.setState({ addNewEvent:defaultEvent });
+      console.log()
     }
 
-    checkBoxValue = () => {
-      this.setState({ check: !this.state.check })
+    getCheckedBox = () => {
+      document.getElementsByClassName("get-service").addEventListener('click', () => {
+        if(this.state.check)
+        {
+          console.log(document.getElementsByClassName("get-service").getAttribute("id"));
+        }
+      });
+
+    }
+
+    handleCheckboxChange = (e) => {
+     const serviceId = e.target.id;
+     const indexOfServiceId = this.state.selectedServiceIds.indexOf(serviceId);
+     if(indexOfServiceId == -1){
+       this.setState({ selectedServiceIds: this.state.selectedServiceIds.concat(serviceId) })
+     } else {
+       this.setState({ selectedServiceIds: this.state.selectedServiceIds.filter(id => id != serviceId)})
+     }
     }
 
     render() {
-        const { open, addNewEvent, events, addNewServiceType, services } = this.state;
+        const { open, addNewEvent, events, addNewServiceType, services, showVolunteerServices, selectedServiceIds } = this.state;
         console.log(services);
         const { user, authed } = this.props;
 
@@ -150,11 +167,10 @@ class Event extends React.Component {
         // ));
 
         const serviceCheckboxes = services.map((service,i) => {
-          console.log("the service", service)
           return (
             <label key={i}>
               <h4>{service.volunteerServiceType}</h4>
-              <Input type="checkbox" name={service.volunteerServiceType}  onChange={this.checkBoxValue} />
+              <Input type="checkbox" id={service.id} className="get-service" name={service.volunteerServiceType} checked={selectedServiceIds.indexOf(`${service.id}`) != -1} onChange={this.handleCheckboxChange} />
             </label>
           );
         })
@@ -162,7 +178,7 @@ class Event extends React.Component {
         return (
             <div>
                 {
-                    (user.isAdmin) ? (
+                  (user.isAdmin) ? (
                         <div className="addPayment">
                         <button onClick={this.onOpenModal} className="btn" id="buttonOh">Add my Event</button>
                      <Modal open={open} onClose={this.onCloseModal} center>
@@ -216,11 +232,11 @@ class Event extends React.Component {
                                    </div>
                                  </div>
                                  <button type="button" onClick={this.showOrHideForm} id="toggle-form">Toggle Form!</button>
-
-                                 <div id="volunteer-services">
-                                <label htmlFor="inputLastName" className="control-label">
-                                     volunteer Service:
-                                </label>
+{ (showVolunteerServices) ?
+(                                 <div id="volunteer-services">
+                                    <label htmlFor="inputLastName" className="control-label">
+                                        volunteer Service:
+                                    </label>
                                    <div className="">
                                      <input
                                        type="name"
@@ -234,42 +250,8 @@ class Event extends React.Component {
                                      {serviceCheckboxes}
                                      {/* <Input type="checkbox" value={this.state.check} onChange={this.checkBoxValue}>{serviceitem}</Input>                            */}
                                  </div>
-                                 {/* <div className="form-group">
-                                   <label htmlFor="inputLastName" className="control-label">
-                                     Expiration Date
-                                   </label>
-                                   <div className="col-sm-8">
-                                     <input
-                                       //type="date"
-                                       className="form-control"
-                                       id="inputDate"
-                                       placeholder="01/2019"
-                                       value={addNewEvent.expirationDate}
-                                       onChange={this.expirationDateChange}
-                                     />
-                                   </div>
-                                 </div> */}
-                                 {/* <FormGroup tag="fieldset">
-                                   <label>Payment Type</label>
-                                   <FormGroup check>
-                                       <Label check>
-                                       <Input type="radio" name="radio1" value="0" onClick={this.getPaymentType}/>{' '}
-                                       Master Card
-                                       </Label>
-                                   </FormGroup>
-                                   <FormGroup check>
-                                       <Label check>
-                                       <Input type="radio" name="radio1" value="1" onClick={this.getPaymentType}/>{' '}
-                                       Visa
-                                       </Label>
-                                   </FormGroup>
-                                   <FormGroup check >
-                                       <Label check>
-                                       <Input type="radio" name="radio1" value="2" onClick={this.getPaymentType}/>{' '}
-                                       American Express
-                                       </Label>
-                                   </FormGroup>
-                                   </FormGroup>                 */}
+) : ("")
+}
                                  <div className="form-group">
                                    <div className="col-sm-12">
                                      <Button
