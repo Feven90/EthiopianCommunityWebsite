@@ -28,6 +28,8 @@ namespace EthiopianCommunityWebsite
             // In production, the React files will be served from this directory
             services.Configure<DbConfiguration>(Configuration);
             services.AddTransient<UserRepository>();
+            services.AddTransient<EventRepository>();
+            services.AddTransient<EventVolunteerServiceRepository>();
 
             //services.AddTransient<ITargetRepository>(builder => builder.GetService<StubTargetRepository>());
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

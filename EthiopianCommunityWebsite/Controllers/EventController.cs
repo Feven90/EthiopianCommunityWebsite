@@ -14,6 +14,7 @@ namespace EthiopianCommunityWebsite.Controllers
     public class EventController : ControllerBase
     {
         readonly EventRepository _eventRepository;
+        readonly EventVolunteerServiceRepository _eventVolunteerServiceRepository;
         //readonly CreateUserRequestValidator _validator;
         // readonly CreateCustomerProductValidator _customerProductValidator;
 
@@ -24,15 +25,15 @@ namespace EthiopianCommunityWebsite.Controllers
             _eventRepository = new EventRepository();
         }
         [HttpPost("register")]
-        public ActionResult AddEvent(Event createRequest)
+        public ActionResult AddEvent(Event createRequest, EventVolunteerService createVolunteerService)
         {
             //if (_validator.Validate(createRequest))
             //    return BadRequest(new { error = "customer must have a First Name, Last Name and Email " });
             var newEvent = _eventRepository.AddEvent(createRequest);
-            //foreach (var volunteerServiceId in createRequest.EventVolunteerServices)
-            //{
-            //    _eventVolunteerServiceRepository.create(newEvent.Id, volunteerServiceId);
-            //}
+            foreach (var volunteerServiceId in createRequest.VolunteerServiceId)
+            {
+                _eventVolunteerServiceRepository.AddEventVolunteerService(createVolunteerService);
+            }
             return Created($"/api/event", newEvent);
 
         }
