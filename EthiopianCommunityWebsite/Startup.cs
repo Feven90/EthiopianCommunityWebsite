@@ -23,7 +23,8 @@ namespace EthiopianCommunityWebsite
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+			services.AddCors();
+			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // In production, the React files will be served from this directory
             services.Configure<DbConfiguration>(Configuration);
@@ -60,34 +61,31 @@ namespace EthiopianCommunityWebsite
                 app.UseHsts();
             }
 
-            //app.UseHttpsRedirection();
-            //app.UseSpaStaticFiles();
+            //app.usehttpsredirection();
+            //app.usespastaticfiles();
 
-            //app.UseMvc(routes =>
+            //app.usemvc(routes =>
             //{
-            //    routes.MapRoute(
+            //    routes.maproute(
             //        name: "default",
-            //        template: "{controller}/{action=Index}/{id?}");
+            //        template: "{controller}/{action=index}/{id?}");
             //});
 
-            //app.UseSpa(spa =>
+            //app.usespa(spa =>
             //{
-            //    spa.Options.SourcePath = "ClientApp";
+            //   spa.options.sourcepath = "clientapp";
 
-            //    if (env.IsDevelopment())
+            //    if (env.isdevelopment())
             //    {
-            //        spa.UseReactDevelopmentServer(npmScript: "start");
+            //        spa.usereactdevelopmentserver(npmscript: "start");
             //    }
             //});
             app.UseStaticFiles();
-            app.UseCors(builder =>
-            {
-                builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials();
-            });
+          
 
             app.UseCors(builder =>
             {
-                builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials();
+                builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
             });
 
             app.UseMvc();

@@ -10,7 +10,7 @@ namespace EthiopianCommunityWebsite.Data
 {
     public class EventVolunteerServiceRepository
     {
-        const string ConnectionString = "Server=localhost;Database=EthioCommunity;Trusted_Connection=True;";
+        const string ConnectionString = "Server=localhost;Database=EthiopianCommunity;Trusted_Connection=True;";
 
         public EventVolunteerService AddEventVolunteerService(EventVolunteerService eventVolunteerServiceInfo)
         {
