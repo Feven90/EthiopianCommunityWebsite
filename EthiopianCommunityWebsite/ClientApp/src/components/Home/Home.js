@@ -34,12 +34,18 @@ class Home extends React.Component {
 
     return (
         <div>
-          <div id="header-img"></div>
-          {/* <img alt="header"></img> */}
+          {/* <div id="img-container"></div> */}
+          <div className="image-text">
+              <img src={HeaderImg} id="header-img" alt="header"></img>
+            <div className="text-on-img">
+            <h1 className="text">Ethiopian Community</h1>
+            </div>
+          </div>
         <div>
         <div className="events-mission-div row">
-          <div className="events-home col-6"></div>
-          <div className="mission-home col-6"></div>
+        <div className="mission-home col-4"></div>
+          <div className="events-home col-4"><h2 className="event-text">Our Events</h2></div>
+          <div className="info-home col-4"></div>
           {/* <div className="col-4"></div> */}
         </div>
             What is Lorem Ipsum?
