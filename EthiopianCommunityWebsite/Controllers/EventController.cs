@@ -14,26 +14,28 @@ namespace EthiopianCommunityWebsite.Controllers
     public class EventController : ControllerBase
     {
         readonly EventRepository _eventRepository;
-        //readonly EventVolunteerServiceRepositor_eventVolunteerServiceRepository;
+		readonly EventVolunteerServiceRepository _eventVolunteerServiceRepository;
         //readonly CreateUserRequestValidator _validator;
         // readonly CreateCustomerProductValidator _customerProductValidator;
 
         // GET: /<controller>/
-        public EventController()
+        public EventController(EventRepository eventRepository, EventVolunteerServiceRepository eventVolunteerServiceRepository)
         {
-            //_validator = new CreateCustomerRequestValidator();
-            _eventRepository = new EventRepository();
-        }
+			//_validator = new CreateCustomerRequestValidator();
+			_eventRepository = eventRepository;
+			_eventVolunteerServiceRepository = eventVolunteerServiceRepository;
+
+		}
         [HttpPost("register")]
         public ActionResult AddEvent(Event createRequest)
         {
             //if (_validator.Validate(createRequest))
             //    return BadRequest(new { error = "customer must have a First Name, Last Name and Email " });
             var newEvent = _eventRepository.AddEvent(createRequest);
-			//foreach (var volunteerServiceId in createRequest.VolunteerServiceId)
-			//{
-			//	_eventVolunteerServiceRepository.AddEventVolunteerService(createRequest.EventId, createRequest.UserVolunteerId);
-			//}
+			foreach (var volunteerService in createRequest.VolunteerServices)
+			{
+				_eventVolunteerServiceRepository.AddEventVolunteerService(createRequest.EventId, createRequest.UserVolunteerId, volunteerService.Id);
+			}
 			return Created($"/api/event", newEvent);
 
         }
@@ -48,12 +50,12 @@ namespace EthiopianCommunityWebsite.Controllers
             return Ok(allEvents);
         }
 
-        [HttpGet("{userUid}")]
-        public ActionResult GetSingleEvent(string userUid)
-        {
-            var singleEvent = _eventRepository.GetSingleEvent(userUid);
-            return Ok(singleEvent);
-        }
+        //[HttpGet("{userUid}")]
+        //public ActionResult GetSingleEvent(string userUid)
+        //{
+        //    var singleEvent = _eventRepository.GetSingleEvent(userUid);
+        //    return Ok(singleEvent);
+        //}
 
         //[HttpPut("{userUid}")]
         //public ActionResult UpdateEvent(Event event)

@@ -28,7 +28,7 @@ namespace EthiopianCommunityWebsite
 				options.AddPolicy("fevensPolicy",
 				builder =>
 				{
-					builder.WithOrigins("http://localhost:3000");
+					builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod();
 				});
 			});
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -37,10 +37,10 @@ namespace EthiopianCommunityWebsite
             services.Configure<DbConfiguration>(Configuration);
             services.AddTransient<UserRepository>();
             services.AddTransient<EventRepository>();
-            //services.AddTransient<EventVolunteerServiceRepository>();
+			services.AddTransient<EventVolunteerServiceRepository>();
 
-            //services.AddTransient<ITargetRepository>(builder => builder.GetService<StubTargetRepository>());
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+			//services.AddTransient<ITargetRepository>(builder => builder.GetService<StubTargetRepository>());
+			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
                 options.IncludeErrorDetails = true;
@@ -64,29 +64,8 @@ namespace EthiopianCommunityWebsite
             }
             else
             {
-                //app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-
-            //app.usehttpsredirection();
-            //app.usespastaticfiles();
-
-            //app.usemvc(routes =>
-            //{
-            //    routes.maproute(
-            //        name: "default",
-            //        template: "{controller}/{action=index}/{id?}");
-            //});
-
-            //app.usespa(spa =>
-            //{
-            //   spa.options.sourcepath = "clientapp";
-
-            //    if (env.isdevelopment())
-            //    {
-            //        spa.usereactdevelopmentserver(npmscript: "start");
-            //    }
-            //});
             app.UseStaticFiles();
 
 

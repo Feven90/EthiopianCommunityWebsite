@@ -9,9 +9,9 @@ class Home extends React.Component {
 
   state = {
     products: [],
-    index: 0,
-    direction: null,
-    btn: true,
+    // index: 0,
+    // direction: null,
+    // btn: true,
   }
 
   componentDidMount() {
