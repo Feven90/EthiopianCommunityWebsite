@@ -17,12 +17,11 @@ import HeaderImg from "../../Images/community1.jpg";
 
 // import './Home.scss';
 const defaultEvent = {
-    eventName: '',
-    address: '',
-    time: '',
-    selectedServiceIds: [],
-    userVolunteerId: ''
-    }
+    EventName: '',
+    Address: '',
+    Time: '',
+    SelectedServiceIds: []
+    };
 
 const defaultService = {
   volunteerSerivceType: ''
@@ -107,15 +106,15 @@ class Event extends React.Component {
     }
 
     eventChange = e => {
-      this.formFieldStringState('eventName', e);
+      this.formFieldStringState('EventName', e);
     };
   
     addressChange = e => {
-      this.formFieldStringState('address', e);
+      this.formFieldStringState('Address', e);
     };
     
     timeChange = e => {
-      this.formFieldStringState('time', e);
+      this.formFieldStringState('Time', e);
     };
 
     showOrHideForm = () => {
@@ -127,7 +126,7 @@ class Event extends React.Component {
       e.preventDefault();
       const eventInformation = { ...this.state.addNewEvent };
       // const volunteerSerivceInformation = { ...this.state.addNewServiceType}
-      eventInformation.selectedServiceIds = this.state.selectedServiceIds;
+      eventInformation.SelectedServiceIds = this.state.selectedServiceIds;
       this.addEvent(eventInformation);
       // this.setState({ addNewServiceType: defaultService})
       this.setState({ addNewEvent:defaultEvent });
