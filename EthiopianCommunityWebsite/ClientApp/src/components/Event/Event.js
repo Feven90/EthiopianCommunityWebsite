@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import React from 'react';
 import eventRequest from '../../helpers/data/eventRequest';
+import eventServiceRequest from '../../helpers/data/eventVolunteerServiceRequest';
 import serviceRequest from '../../helpers/data/volunteerServiceRequest';
 import Modal from 'react-responsive-modal';
 // import {
@@ -18,7 +19,9 @@ import HeaderImg from "../../Images/community1.jpg";
 const defaultEvent = {
     eventName: '',
     address: '',
-    time: ''
+    time: '',
+    selectedServiceIds: [],
+    userVolunteerId: ''
     }
 
 const defaultService = {
@@ -36,7 +39,7 @@ class Event extends React.Component {
         addNewServiceType: defaultService,
         services: [],
         showVolunteerServices: false,
-        selectedServiceIds: []
+       selectedServiceIds: []
     }
 
     selectedEvent = (e) => {
@@ -75,6 +78,10 @@ class Event extends React.Component {
       eventRequest.postEventRequest(event).then(() => {
       })
     }
+    // addEventVolunteerService = (eventServices) => {
+    //   eventServiceRequest.postEventVolunteerServiceRequest(eventServices).then(() => {
+    //   })
+    // }
 
     getClickedCheckboxs = (e) => {
       var getId = e.target.id;
@@ -120,8 +127,8 @@ class Event extends React.Component {
       e.preventDefault();
       const eventInformation = { ...this.state.addNewEvent };
       // const volunteerSerivceInformation = { ...this.state.addNewServiceType}
+      eventInformation.selectedServiceIds = this.state.selectedServiceIds;
       this.addEvent(eventInformation);
-      // this.addVolunteerService(volunteerSerivceInformation);
       // this.setState({ addNewServiceType: defaultService})
       this.setState({ addNewEvent:defaultEvent });
       console.log()

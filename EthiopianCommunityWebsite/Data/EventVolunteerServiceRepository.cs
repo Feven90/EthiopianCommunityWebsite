@@ -12,20 +12,20 @@ namespace EthiopianCommunityWebsite.Data
 	{
 		const string ConnectionString = @"Server=localhost\SQLEXPRESS;Database=EthiopianCommunity;Trusted_Connection=True;";
 
-		public EventVolunteerService AddEventVolunteerService(int eventId, int userVolunteerId, int volunteerServiceIdz)
+		public EventVolunteerService AddEventVolunteerService(int eventId, int userVolunteerId,int volunteerServiceId)
 		{
 			using (var db = new SqlConnection(ConnectionString))
 			{
 
 				var addEventVolunteerService = db.QueryFirstOrDefault<EventVolunteerService>(@"
-                    Insert into [EventVolunteerService] (eventName, userVolunteerId, volunteerServiceId)
+                    Insert into [EventVolunteerService] (eventId, userVolunteerId, volunteerServiceId)
                     Output inserted.*
-                    Values(@eventName, @userVolunteerId, @volunteerServiceId)",
+                    Values(@eventId, @userVolunteerId, @volunteerServiceId)",
 					new
 					{
 						eventId,
 						userVolunteerId,
-						volunteerServiceId = volunteerServiceIdz
+						volunteerServiceId 
 					});
 
 

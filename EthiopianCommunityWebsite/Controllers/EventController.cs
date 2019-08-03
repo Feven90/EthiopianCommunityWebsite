@@ -32,9 +32,9 @@ namespace EthiopianCommunityWebsite.Controllers
             //if (_validator.Validate(createRequest))
             //    return BadRequest(new { error = "customer must have a First Name, Last Name and Email " });
             var newEvent = _eventRepository.AddEvent(createRequest);
-			foreach (var volunteerService in createRequest.VolunteerServices)
+			foreach (var volunteerServiceId in createRequest.SelectedServiceIds)
 			{
-				_eventVolunteerServiceRepository.AddEventVolunteerService(createRequest.EventId, createRequest.UserVolunteerId, volunteerService.Id);
+				_eventVolunteerServiceRepository.AddEventVolunteerService(createRequest.EventId, createRequest.UserVolunteerId, volunteerServiceId);
 			}
 			return Created($"/api/event", newEvent);
 
