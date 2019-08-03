@@ -10,7 +10,7 @@ namespace EthiopianCommunityWebsite.Data
 {
     public class UserRepository
     {
-        const string ConnectionString = "Server=localhost;Database=EthioCommunity;Trusted_Connection=True;";
+        const string ConnectionString = @"Server=localhost\SQLEXPRESS;Database=EthiopianCommunity;Trusted_Connection=True;";
 
         public User AddUser(User userInfo)
         {

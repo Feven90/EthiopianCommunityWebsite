@@ -20,22 +20,16 @@ class EventItem extends React.Component {
         return(
             <div>
 
-            <div className="cart-item">
-                <div className="cart-img card">
+                <div className="event-item card">
                     {/* <img className="cartProduct" src={customerProduct.image} alt="cart items"/> */}
-                <h1>{event.eventName}</h1>
-                <h3>{event.time}</h3>
-                <h3>{event.address}</h3>
-                <Button id={event.id} onClick={this.props.selectedEvent}>Register</Button> 
+                    <h1>{event.eventName}</h1>
+                    <h3>Time: {event.time}</h3>
+                    <h3>Address: {event.address}</h3>
+                    <Button id={event.id} onClick={this.props.selectedEvent}>Register</Button> 
                 </div>
-                <div className="product-description">
-                    {/* <h5>Title:{customerProduct.title}</h5>
-                    <h5>Size:{customerProduct.size}</h5>
-                    <h5>Price:${customerProduct.price}</h5> 
-                    <button className="btn btn-danger" onClick={this.deleteProductEvent}><i class="fas fa-trash-restore"></i></button> */}
+                    <div className="product-description">
                 </div>
                 
-                </div>
             </div>
         )};
 

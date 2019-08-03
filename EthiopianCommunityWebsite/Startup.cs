@@ -23,16 +23,24 @@ namespace EthiopianCommunityWebsite
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+			services.AddCors(options =>
+			{
+				options.AddPolicy("fevensPolicy",
+				builder =>
+				{
+					builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod();
+				});
+			});
+			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // In production, the React files will be served from this directory
             services.Configure<DbConfiguration>(Configuration);
             services.AddTransient<UserRepository>();
             services.AddTransient<EventRepository>();
-            services.AddTransient<EventVolunteerServiceRepository>();
+			services.AddTransient<EventVolunteerServiceRepository>();
 
-            //services.AddTransient<ITargetRepository>(builder => builder.GetService<StubTargetRepository>());
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+			//services.AddTransient<ITargetRepository>(builder => builder.GetService<StubTargetRepository>());
+			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
                 options.IncludeErrorDetails = true;
@@ -56,39 +64,12 @@ namespace EthiopianCommunityWebsite
             }
             else
             {
-                //app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-
-            //app.UseHttpsRedirection();
-            //app.UseSpaStaticFiles();
-
-            //app.UseMvc(routes =>
-            //{
-            //    routes.MapRoute(
-            //        name: "default",
-            //        template: "{controller}/{action=Index}/{id?}");
-            //});
-
-            //app.UseSpa(spa =>
-            //{
-            //    spa.Options.SourcePath = "ClientApp";
-
-            //    if (env.IsDevelopment())
-            //    {
-            //        spa.UseReactDevelopmentServer(npmScript: "start");
-            //    }
-            //});
             app.UseStaticFiles();
-            app.UseCors(builder =>
-            {
-                builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials();
-            });
 
-            app.UseCors(builder =>
-            {
-                builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials();
-            });
+
+			app.UseCors("fevensPolicy");
 
             app.UseMvc();
         }
