@@ -13,7 +13,7 @@ namespace EthiopianCommunityWebsite.Models
         public string Time { get; set; }
         public int EventId { get; set; }
         public int UserVolunteerId { get; set; }
-        //public int VolunteerServiceId { get; set; }
+        public int VolunteerServiceIdz { get; set; }
         public List<EventVolunteerService> VolunteerServiceId { get; set; }
     }
 }

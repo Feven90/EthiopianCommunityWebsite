@@ -10,7 +10,7 @@ namespace EthiopianCommunityWebsite.Data
 {
     public class EventRepository
     {
-        const string ConnectionString = "Server=localhost;Database=EthiopianCommunity;Trusted_Connection=True;";
+        const string ConnectionString = @"Server=localhost\SQLEXPRESS;Database=EthiopianCommunity;Trusted_Connection=True;";
 
         public Event AddEvent(Event eventInfo)
         {
