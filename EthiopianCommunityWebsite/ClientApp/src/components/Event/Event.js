@@ -33,7 +33,6 @@ class Event extends React.Component {
         addNewEvent: defaultEvent,
         paymentType: '',
         events: [], 
-        eventId:'',
         check: false,
         addNewServiceType: defaultService,
         services: [],

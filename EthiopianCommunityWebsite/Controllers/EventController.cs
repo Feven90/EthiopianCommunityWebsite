@@ -34,7 +34,7 @@ namespace EthiopianCommunityWebsite.Controllers
             var newEvent = _eventRepository.AddEvent(createRequest);
 			foreach (var volunteerServiceId in createRequest.SelectedServiceIds)
 			{
-				_eventVolunteerServiceRepository.AddEventVolunteerService(createRequest.EventId, createRequest.UserVolunteerId, volunteerServiceId);
+				_eventVolunteerServiceRepository.AddEventVolunteerService(newEvent.Id, createRequest.UserVolunteerId, volunteerServiceId);
 			}
 			return Created($"/api/event", newEvent);
 
