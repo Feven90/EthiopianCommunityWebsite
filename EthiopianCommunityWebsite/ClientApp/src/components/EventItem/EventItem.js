@@ -15,15 +15,17 @@ class EventItem extends React.Component {
 
     }
 
+    
+
     render() {
-        const { event, user} = this.props;
+        const { event, user, userCheckboxChangeHandler, userSelectedServicesIds} = this.props;
         console.log(event);
         console.log(event.eventVolunteerService);
         const eventServicesList = event.eventVolunteerService.map((service,i) => {
             return (
               <label key={i}>
                 <h4>{service.volunteerServiceType}</h4>
-                <Input type="checkbox" id={service.id} className="get-service" name={service.volunteerServiceType} />
+                <Input type="checkbox" id={service.id} className="get-service" name={service.volunteerServiceType} checked={userSelectedServicesIds.indexOf(`${service.id}`) != -1} onChange={userCheckboxChangeHandler} />
               </label>
             );
           })
