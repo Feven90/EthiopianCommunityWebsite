@@ -20,7 +20,8 @@ const defaultEvent = {
     EventName: '',
     Address: '',
     Time: '',
-    SelectedServiceIds: []
+    SelectedServiceIds: [],
+    userSelectedServicesIds: []
     };
 
 const defaultService = {
@@ -37,7 +38,8 @@ class Event extends React.Component {
         addNewServiceType: defaultService,
         services: [],
         showVolunteerServices: false,
-       selectedServiceIds: []
+       selectedServiceIds: [],
+       userSelectedServicesIds: []
     }
 
     selectedEvent = (e) => {
@@ -142,6 +144,16 @@ class Event extends React.Component {
 
     }
 
+    UserCheckboxChangeHandler = (e) => {
+      const userServiceId = e.target.id;
+      const indexOfUserServiceId = this.state.userSelectedServicesIds.indexOf(userServiceId);
+      if(indexOfUserServiceId == -1){
+        this.setState({ userSelectedServicesIds: this.state.userSelectedServicesIds.concat(userServiceId) })
+      } else {
+        this.setState({ userSelectedServicesIds: this.state.userSelectedServicesIds.filter(id => id != userServiceId)})
+      }
+     }
+
     handleCheckboxChange = (e) => {
      const serviceId = e.target.id;
      const indexOfServiceId = this.state.selectedServiceIds.indexOf(serviceId);
@@ -153,7 +165,7 @@ class Event extends React.Component {
     }
 
     render() {
-        const { open, addNewEvent, events, addNewServiceType, services, showVolunteerServices, selectedServiceIds } = this.state;
+        const { open, addNewEvent, events, addNewServiceType, services, showVolunteerServices, selectedServiceIds, userSelectedServicesIds } = this.state;
         console.log(services);
         const { user, authed } = this.props;
 
@@ -164,6 +176,8 @@ class Event extends React.Component {
               key={events.id}
               user={user}
               selectedEvent={this.selectedEvent}
+              userCheckboxChangeHandler = {this.UserCheckboxChangeHandler}
+              userSelectedServicesIds = {userSelectedServicesIds}
             //   deleteOneProduct={this.deleteOneProduct}
             />
         ));
