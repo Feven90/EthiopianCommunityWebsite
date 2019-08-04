@@ -43,11 +43,12 @@ namespace EthiopianCommunityWebsite.Controllers
         public ActionResult GetEvents()
         {
             var allEvents = _eventRepository.GetEvents();
-            //foreach (var thisEvent in allEvents)
-            //{
-            //    allEvents.EventVolunteerServices = _eventVolunteerServiceRepository.GetEVSByEvent(thisEvent.Id)
-            //}
-            return Ok(allEvents);
+			foreach (var oneEvent in allEvents)
+			{
+				oneEvent.EventVolunteerService = _eventVolunteerServiceRepository.GetEventServiceByEventId(oneEvent.Id);
+				
+			}
+			return Ok(allEvents);
         }
 
         //[HttpGet("{userUid}")]

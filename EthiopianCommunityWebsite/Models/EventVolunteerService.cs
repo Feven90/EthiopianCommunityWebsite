@@ -11,5 +11,6 @@ namespace EthiopianCommunityWebsite.Models
         public int EventId { get; set; }
         public int UserVolunteerId { get; set; }
         public int VolunteerServiceId { get; set; }
+		public string VolunteerServiceType { get; set; }
     }
 }
