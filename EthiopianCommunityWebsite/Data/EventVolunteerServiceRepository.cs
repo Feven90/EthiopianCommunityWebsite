@@ -37,6 +37,19 @@ namespace EthiopianCommunityWebsite.Data
 
 			throw new Exception("No user created");
 		}
+		public IEnumerable<EventVolunteerService> GetEventServiceByEventId(int eventId)
+		{
+			using (var db = new SqlConnection(ConnectionString))
+			{
+				var allServices = db.Query<EventVolunteerService>(@"Select volunteerServiceType 
+                                                      from [EventVolunteerService] evs join [volunteerService] vs
+														on evs.volunteerServiceId = vs.id
+                                                       Where eventId = @eventId",
+													   new { eventId });
+
+				return allServices;
+			}
+		}
 	}
 
 }
