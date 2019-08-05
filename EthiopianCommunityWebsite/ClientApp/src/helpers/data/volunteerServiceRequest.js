@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const getVolunteerService = () => new Promise((resolve, reject) => {
     axios
-    .get(`http://localhost:63183/api/VolunteerService/allServices`)
+    .get(`http://localhost:50158/api/VolunteerService/allServices`)
       .then((res) => {
         let service = res.data;
 
@@ -11,6 +11,6 @@ const getVolunteerService = () => new Promise((resolve, reject) => {
       .catch(err => reject(err));
   });
 
-const postVolunteerServiceRequest = (volunteerServiceType) => axios.post(`http://localhost:63183/api/VolunteerService/register`, volunteerServiceType);
+const postVolunteerServiceRequest = (volunteerServiceType) => axios.post(`http://localhost:50158/api/VolunteerService/register`, volunteerServiceType);
 
 export default { postVolunteerServiceRequest, getVolunteerService };

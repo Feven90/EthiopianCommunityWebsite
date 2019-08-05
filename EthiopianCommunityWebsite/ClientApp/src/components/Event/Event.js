@@ -1,6 +1,8 @@
 import $ from 'jquery';
 import React from 'react';
 import eventRequest from '../../helpers/data/eventRequest';
+import userVolunteerRequest from '../../helpers/data/userVolunteerRequest';
+import eventServiceRequest from '../../helpers/data/eventVolunteerServiceRequest';
 import serviceRequest from '../../helpers/data/volunteerServiceRequest';
 import Modal from 'react-responsive-modal';
 // import {
@@ -16,14 +18,19 @@ import HeaderImg from "../../Images/community1.jpg";
 
 // import './Home.scss';
 const defaultEvent = {
-    eventName: '',
-    address: '',
-    time: ''
-    }
+    EventName: '',
+    Address: '',
+    Time: '',
+    SelectedServiceIds: [],
+    //userSelectedServicesIds: []
+    };
 
-const defaultService = {
-  volunteerSerivceType: ''
-}
+// const defaultService = {
+//   volunteerSerivceType: ''
+// }
+    const defaultUserService = {
+      userSelectedServicesIds: []
+    }
 
 class Event extends React.Component {
     state = {
@@ -31,12 +38,12 @@ class Event extends React.Component {
         addNewEvent: defaultEvent,
         paymentType: '',
         events: [], 
-        eventId:'',
         check: false,
-        addNewServiceType: defaultService,
+        //addNewServiceType: defaultService,
         services: [],
         showVolunteerServices: false,
-        selectedServiceIds: []
+       selectedServiceIds: [],
+       userSelectedServicesIds: []
     }
 
     selectedEvent = (e) => {
@@ -66,15 +73,25 @@ class Event extends React.Component {
             this.setState({ events });
         });
     }
-    addVolunteerService = (service) => {
-      serviceRequest.postVolunteerServiceRequest(service).then(() => {
-        })
-    }
+    // addVolunteerService = (service) => {
+    //   serviceRequest.postVolunteerServiceRequest(service).then(() => {
+    //     })
+    // }
 
     addEvent = (event) => {
       eventRequest.postEventRequest(event).then(() => {
       })
     }
+    
+    addUserVolunteerService = (userVolunteer) => {
+      userVolunteerRequest.postUserVolunteerRequest(userVolunteer). then(() => {
+
+      })
+    }
+    // addEventVolunteerService = (eventServices) => {
+    //   eventServiceRequest.postEventVolunteerServiceRequest(eventServices).then(() => {
+    //   })
+    // }
 
     getClickedCheckboxs = (e) => {
       var getId = e.target.id;
@@ -100,15 +117,15 @@ class Event extends React.Component {
     }
 
     eventChange = e => {
-      this.formFieldStringState('eventName', e);
+      this.formFieldStringState('EventName', e);
     };
   
     addressChange = e => {
-      this.formFieldStringState('address', e);
+      this.formFieldStringState('Address', e);
     };
     
     timeChange = e => {
-      this.formFieldStringState('time', e);
+      this.formFieldStringState('Time', e);
     };
 
     showOrHideForm = () => {
@@ -119,12 +136,23 @@ class Event extends React.Component {
     formSubmit = (e) => {
       e.preventDefault();
       const eventInformation = { ...this.state.addNewEvent };
+      console.log( this.props.user.id);
       // const volunteerSerivceInformation = { ...this.state.addNewServiceType}
+      eventInformation.SelectedServiceIds = this.state.selectedServiceIds;
       this.addEvent(eventInformation);
-      // this.addVolunteerService(volunteerSerivceInformation);
+     // this.addUserVolunteerService(eventInformation);
       // this.setState({ addNewServiceType: defaultService})
       this.setState({ addNewEvent:defaultEvent });
-      console.log()
+    }
+
+    RegistrationSubmit = (e) => {
+      e.preventDefault();
+      const userVolunteerInformation = {};
+      userVolunteerInformation.VolunteerServiceId  = this.state.userSelectedServicesIds;
+      userVolunteerInformation.UserId = this.props.user.id;
+      this.addUserVolunteerService(userVolunteerInformation);
+      this.setState({ userSelectedServicesIds: [] });
+
     }
 
     getCheckedBox = () => {
@@ -137,8 +165,19 @@ class Event extends React.Component {
 
     }
 
+    UserCheckboxChangeHandler = (e) => {
+      const userServiceId = e.target.id;
+      const indexOfUserServiceId = this.state.userSelectedServicesIds.indexOf(userServiceId);
+      if(indexOfUserServiceId == -1){
+        this.setState({ userSelectedServicesIds: this.state.userSelectedServicesIds.concat(userServiceId) })
+      } else {
+        this.setState({ userSelectedServicesIds: this.state.userSelectedServicesIds.filter(id => id != userServiceId)})
+      }
+     }
+
     handleCheckboxChange = (e) => {
      const serviceId = e.target.id;
+     console.log(serviceId);
      const indexOfServiceId = this.state.selectedServiceIds.indexOf(serviceId);
      if(indexOfServiceId == -1){
        this.setState({ selectedServiceIds: this.state.selectedServiceIds.concat(serviceId) })
@@ -148,7 +187,7 @@ class Event extends React.Component {
     }
 
     render() {
-        const { open, addNewEvent, events, addNewServiceType, services, showVolunteerServices, selectedServiceIds } = this.state;
+        const { open, addNewEvent, events, addNewServiceType, services, showVolunteerServices, selectedServiceIds, userSelectedServicesIds } = this.state;
         console.log(services);
         const { user, authed } = this.props;
 
@@ -159,6 +198,9 @@ class Event extends React.Component {
               key={events.id}
               user={user}
               selectedEvent={this.selectedEvent}
+              userCheckboxChangeHandler = {this.UserCheckboxChangeHandler}
+              userSelectedServicesIds = {userSelectedServicesIds}
+              RegistrationSubmit= {this.RegistrationSubmit}
             //   deleteOneProduct={this.deleteOneProduct}
             />
         ));
@@ -234,7 +276,7 @@ class Event extends React.Component {
                                  <button type="button" onClick={this.showOrHideForm} id="toggle-form">Toggle Form!</button>
 { (showVolunteerServices) ?
 (                                 <div id="volunteer-services">
-                                    <label htmlFor="inputLastName" className="control-label">
+                                    {/* <label htmlFor="inputLastName" className="control-label">
                                         volunteer Service:
                                     </label>
                                    <div className="">
@@ -246,7 +288,7 @@ class Event extends React.Component {
                                        value={addNewServiceType.volunteerServiceType}
                                        onChange={this.volunteerServiceChange}
                                      />      
-                                     </div>
+                                     </div> */}
                                      {serviceCheckboxes}
                                      {/* <Input type="checkbox" value={this.state.check} onChange={this.checkBoxValue}>{serviceitem}</Input>                            */}
                                  </div>

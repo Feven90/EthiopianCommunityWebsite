@@ -32,9 +32,9 @@ namespace EthiopianCommunityWebsite.Controllers
             //if (_validator.Validate(createRequest))
             //    return BadRequest(new { error = "customer must have a First Name, Last Name and Email " });
             var newEvent = _eventRepository.AddEvent(createRequest);
-			foreach (var volunteerService in createRequest.VolunteerServices)
+			foreach (var volunteerServiceId in createRequest.SelectedServiceIds)
 			{
-				_eventVolunteerServiceRepository.AddEventVolunteerService(createRequest.EventId, createRequest.UserVolunteerId, volunteerService.Id);
+				_eventVolunteerServiceRepository.AddEventVolunteerService(newEvent.Id, createRequest.UserVolunteerId, volunteerServiceId);
 			}
 			return Created($"/api/event", newEvent);
 
@@ -43,11 +43,12 @@ namespace EthiopianCommunityWebsite.Controllers
         public ActionResult GetEvents()
         {
             var allEvents = _eventRepository.GetEvents();
-            //foreach (var thisEvent in allEvents)
-            //{
-            //    allEvents.EventVolunteerServices = _eventVolunteerServiceRepository.GetEVSByEvent(thisEvent.Id)
-            //}
-            return Ok(allEvents);
+			foreach (var oneEvent in allEvents)
+			{
+				oneEvent.EventVolunteerService = _eventVolunteerServiceRepository.GetEventServiceByEventId(oneEvent.Id, oneEvent.VolunteerServiceId);
+				
+			}
+			return Ok(allEvents);
         }
 
         //[HttpGet("{userUid}")]
