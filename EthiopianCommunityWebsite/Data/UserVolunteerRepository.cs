@@ -16,7 +16,7 @@ namespace EthiopianCommunityWebsite.Data
 		{
 			using (var db = new SqlConnection(ConnectionString))
 			{
-
+				//foreach (var userVolunteer in userVolunteerInfo.VolunteerServiceId)
 				var addUserVolunteerInformation = db.QueryFirstOrDefault<UserVolunteer>(@"
                     Insert into [userVolunteer] (userId, volunteerServiceId)
                     Output inserted.*
