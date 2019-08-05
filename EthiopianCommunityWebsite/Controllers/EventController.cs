@@ -45,7 +45,7 @@ namespace EthiopianCommunityWebsite.Controllers
             var allEvents = _eventRepository.GetEvents();
 			foreach (var oneEvent in allEvents)
 			{
-				oneEvent.EventVolunteerService = _eventVolunteerServiceRepository.GetEventServiceByEventId(oneEvent.Id);
+				oneEvent.EventVolunteerService = _eventVolunteerServiceRepository.GetEventServiceByEventId(oneEvent.Id, oneEvent.VolunteerServiceId);
 				
 			}
 			return Ok(allEvents);

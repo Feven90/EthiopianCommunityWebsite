@@ -21,11 +21,12 @@ class EventItem extends React.Component {
         const { event, user, userCheckboxChangeHandler, userSelectedServicesIds} = this.props;
         console.log(event);
         console.log(event.eventVolunteerService);
+
         const eventServicesList = event.eventVolunteerService.map((service,i) => {
             return (
               <label key={i}>
                 <h4>{service.volunteerServiceType}</h4>
-                <Input type="checkbox" id={service.id} className="get-service" name={service.volunteerServiceType} checked={userSelectedServicesIds.indexOf(`${service.id}`) != -1} onChange={userCheckboxChangeHandler} />
+                <Input type="checkbox" id={service.volunteerServiceId} className="get-service" name={service.volunteerServiceType} checked={userSelectedServicesIds.indexOf(`${service.volunteerServiceId}`) != -1} onChange={userCheckboxChangeHandler} />
               </label>
             );
           })
@@ -38,8 +39,8 @@ class EventItem extends React.Component {
                     <h3>Time: {event.time}</h3>
                     <h3>Address: {event.address}</h3>
                     
-                   <div> <h3>Event Services: {eventServicesList}</h3></div>
-                    <Button id={event.id} onClick={this.props.selectedEvent}>Register</Button> 
+                   <h3>Event Services: {eventServicesList}</h3>
+                    <Button onClick={this.props.RegistrationSubmit}>Register</Button> 
                 </div>
                     <div className="product-description">
                 </div>

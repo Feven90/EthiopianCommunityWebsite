@@ -37,15 +37,15 @@ namespace EthiopianCommunityWebsite.Data
 
 			throw new Exception("No user created");
 		}
-		public IEnumerable<EventVolunteerService> GetEventServiceByEventId(int eventId)
+		public IEnumerable<EventVolunteerService> GetEventServiceByEventId(int eventId, int volunteerServiceId)
 		{
 			using (var db = new SqlConnection(ConnectionString))
 			{
-				var allServices = db.Query<EventVolunteerService>(@"Select volunteerServiceType 
+				var allServices = db.Query<EventVolunteerService>(@"Select volunteerServiceType, volunteerServiceId
                                                       from [EventVolunteerService] evs join [volunteerService] vs
 														on evs.volunteerServiceId = vs.id
                                                        Where eventId = @eventId",
-													   new { eventId });
+													   new { eventId, volunteerServiceId });
 
 				return allServices;
 			}
