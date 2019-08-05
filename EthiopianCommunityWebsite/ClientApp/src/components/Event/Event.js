@@ -22,7 +22,7 @@ const defaultEvent = {
     Address: '',
     Time: '',
     SelectedServiceIds: [],
-    userSelectedServicesIds: []
+    //userSelectedServicesIds: []
     };
 
 // const defaultService = {
@@ -36,7 +36,6 @@ class Event extends React.Component {
     state = {
         open: false,
         addNewEvent: defaultEvent,
-        addNewUserService: defaultUserService,
         paymentType: '',
         events: [], 
         check: false,
@@ -74,10 +73,10 @@ class Event extends React.Component {
             this.setState({ events });
         });
     }
-    addVolunteerService = (service) => {
-      serviceRequest.postVolunteerServiceRequest(service).then(() => {
-        })
-    }
+    // addVolunteerService = (service) => {
+    //   serviceRequest.postVolunteerServiceRequest(service).then(() => {
+    //     })
+    // }
 
     addEvent = (event) => {
       eventRequest.postEventRequest(event).then(() => {
@@ -148,10 +147,11 @@ class Event extends React.Component {
 
     RegistrationSubmit = (e) => {
       e.preventDefault();
-      const eventInformation = { ...this.state.addNewUserService };
-      eventInformation.UserId = this.props.user.id;
-      this.addUserVolunteerService(eventInformation);
-      this.setState({ addNewUserService: defaultUserService });
+      const userVolunteerInformation = {};
+      userVolunteerInformation.VolunteerServiceId  = this.state.userSelectedServicesIds;
+      userVolunteerInformation.UserId = this.props.user.id;
+      this.addUserVolunteerService(userVolunteerInformation);
+      this.setState({ userSelectedServicesIds: [] });
 
     }
 
