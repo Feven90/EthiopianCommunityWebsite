@@ -33,7 +33,7 @@ namespace EthiopianCommunityWebsite.Controllers
 			foreach (var userService in createRequest.VolunteerServiceIds)
 			{
 				var userVolunteer = _userVolunteerRepository.AddUserVolunteer(userService, createRequest.UserId);
-				_eventVolunteerServiceRepository.UpdateEventVolunteerService(userVolunteer.Id,userVolunteer.EventId, userService);
+				_eventVolunteerServiceRepository.UpdateEventVolunteerService(userVolunteer.Id,createRequest.EventId, userService);
 			}
 
 			return Ok( );

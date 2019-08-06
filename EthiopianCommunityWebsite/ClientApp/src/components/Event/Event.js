@@ -87,9 +87,7 @@ class Event extends React.Component {
     }
     
     addUserVolunteerService = (userVolunteer) => {
-      userVolunteerRequest.postUserVolunteerRequest(userVolunteer). then(() => {
-
-      })
+      userVolunteerRequest.postUserVolunteerRequest(userVolunteer)
     }
     // addEventVolunteerService = (eventServices) => {
     //   eventServiceRequest.postEventVolunteerServiceRequest(eventServices).then(() => {
@@ -150,10 +148,11 @@ class Event extends React.Component {
 
     RegistrationSubmit = (e) => {
       //e.preventDefault();
-      const userVolunteerInformation = {};
-      userVolunteerInformation.VolunteerServiceIds  = this.state.userSelectedServicesIds;
-      userVolunteerInformation.UserId = this.props.user.id;
-      userVolunteerInformation.EventId = this.state.singleEvent.id;
+      const userVolunteerInformation = {
+        VolunteerServiceIds: this.state.userSelectedServicesIds,
+        UserId: this.props.user.id,
+        EventId: e.currentTarget.id
+      };
       console.log(userVolunteerInformation.EventId);
       console.log(this.state.singleEvent.id);
       this.addUserVolunteerService(userVolunteerInformation);

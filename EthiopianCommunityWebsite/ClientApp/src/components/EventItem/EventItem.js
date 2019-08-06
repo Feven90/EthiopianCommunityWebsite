@@ -40,7 +40,7 @@ class EventItem extends React.Component {
                     <h3>Address: {event.address}</h3>
                     
                    <h3>Event Services: {eventServicesList}</h3>
-                    <Button onClick={() => {this.props.RegistrationSubmit(); getSingleEvent(event.id);}}>Register</Button> 
+                    <Button id={event.id} onClick={this.props.RegistrationSubmit}>Register</Button> 
                 </div>
                     <div className="product-description">
                 </div>
