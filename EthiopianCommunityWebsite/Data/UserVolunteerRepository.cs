@@ -12,7 +12,7 @@ namespace EthiopianCommunityWebsite.Data
 	{
 		const string ConnectionString = @"Server=localhost\SQLEXPRESS;Database=EthiopianCommunity;Trusted_Connection=True;";
 
-		public UserVolunteer AddUserVolunteer(UserVolunteer userVolunteerInfo)
+		public UserVolunteer AddUserVolunteer(int volunteerServiceId, int userId)
 		{
 			using (var db = new SqlConnection(ConnectionString))
 			{
@@ -23,8 +23,8 @@ namespace EthiopianCommunityWebsite.Data
                     Values(@userId, @VolunteerServiceId)",
 					new
 					{
-						userId = userVolunteerInfo.UserId,
-						volunteerServiceId = userVolunteerInfo.VolunteerServiceId
+						userId ,
+						volunteerServiceId 
 					});
 
 

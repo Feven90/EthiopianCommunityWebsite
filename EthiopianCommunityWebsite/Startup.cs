@@ -38,6 +38,7 @@ namespace EthiopianCommunityWebsite
             services.AddTransient<UserRepository>();
             services.AddTransient<EventRepository>();
 			services.AddTransient<EventVolunteerServiceRepository>();
+			services.AddTransient<UserVolunteerRepository>();
 
 			//services.AddTransient<ITargetRepository>(builder => builder.GetService<StubTargetRepository>());
 			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

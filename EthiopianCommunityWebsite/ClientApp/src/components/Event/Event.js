@@ -148,7 +148,7 @@ class Event extends React.Component {
     RegistrationSubmit = (e) => {
       e.preventDefault();
       const userVolunteerInformation = {};
-      userVolunteerInformation.VolunteerServiceId  = this.state.userSelectedServicesIds;
+      userVolunteerInformation.VolunteerServiceIds  = this.state.userSelectedServicesIds;
       userVolunteerInformation.UserId = this.props.user.id;
       this.addUserVolunteerService(userVolunteerInformation);
       this.setState({ userSelectedServicesIds: [] });
