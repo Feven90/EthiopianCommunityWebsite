@@ -9,6 +9,7 @@ namespace EthiopianCommunityWebsite.Models
 	{
 		public int Id { get; set; }
 		public int UserId { get; set; }
-		public List<int> VolunteerServiceId { get; set; }
+		public List<int> VolunteerServiceIds { get; set; }
+		public int VolunteerServiceId { get; set; }
 	}
 }
