@@ -14,14 +14,13 @@ namespace EthiopianCommunityWebsite.Controllers
     public class UserVolunteerController : ControllerBase
     {
 		readonly UserVolunteerRepository _userVolunteerRepository;
+		readonly EventVolunteerServiceRepository _eventVolunteerServiceRepository;
 		//readonly CreateUserRequestValidator _validator;
-		// readonly CreateCustomerProductValidator _customerProductValidator;
 
-		// GET: /<controller>/
-		public UserVolunteerController(UserVolunteerRepository userVolunteerRepository)
+		public UserVolunteerController(UserVolunteerRepository userVolunteerRepository, EventVolunteerServiceRepository eventVolunteerServiceRepository)
 		{
-			//_validator = new CreateCustomerRequestValidator();
 			_userVolunteerRepository = userVolunteerRepository;
+			_eventVolunteerServiceRepository = eventVolunteerServiceRepository;
 
 		}
 		[HttpPost("register")]
@@ -30,14 +29,14 @@ namespace EthiopianCommunityWebsite.Controllers
 
 			//if (_validator.Validate(createRequest))
 			//    return BadRequest(new { error = "customer must have a First Name, Last Name and Email " });
-			var newUserVolunteer = _userVolunteerRepository;
+
 			foreach (var userService in createRequest.VolunteerServiceIds)
 			{
-				newUserVolunteer.AddUserVolunteer(userService, createRequest.UserId);
-
+				var userVolunteer = _userVolunteerRepository.AddUserVolunteer(userService, createRequest.UserId);
+				_eventVolunteerServiceRepository.UpdateEventVolunteerService(userVolunteer.Id,userVolunteer.EventId, userService);
 			}
 
-			return Created($"/api/userVolunteer", newUserVolunteer);
+			return Ok( );
 
 		}
 	}

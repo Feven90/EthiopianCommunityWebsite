@@ -50,6 +50,22 @@ namespace EthiopianCommunityWebsite.Data
 				return allServices;
 			}
 		}
+
+		public EventVolunteerService UpdateEventVolunteerService(int userVolunteerId, int eventId, int volunteerServiceId)
+		{
+			using (var db = new SqlConnection(ConnectionString))
+			{
+
+				var updateEventVolunteerService = db.QueryFirstOrDefault<EventVolunteerService>(@"Update EventVolunteerService
+                            Set userVolunteerId = @UserVolunteerId
+                            Where eventId = @eventId 
+							AND volunteerServiceId = VolunteerServiceId",
+						   new { userVolunteerId, eventId, volunteerServiceId });
+
+				return updateEventVolunteerService;
+			}
+			throw new Exception("Could not update user");
+		}
 	}
 
 }

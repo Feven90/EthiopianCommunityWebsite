@@ -45,16 +45,16 @@ namespace EthiopianCommunityWebsite.Data
                 return allEvents;
             }
         }
-        public Event GetSingleEvent(string userUid)
+        public Event GetSingleEvent(int id)
         {
             using (var db = new SqlConnection(ConnectionString))
             {
-                var allEvents = db.QueryFirstOrDefault<Event>(@"Select * 
+                var singleEvent = db.QueryFirstOrDefault<Event>(@"Select * 
                                                       from [Event]
-                                                       Where userUid = @userUid",
-                                                       new { userUid });
+                                                       Where id = @id",
+                                                       new {id });
 
-                return allEvents;
+                return singleEvent;
             }
         }
 
