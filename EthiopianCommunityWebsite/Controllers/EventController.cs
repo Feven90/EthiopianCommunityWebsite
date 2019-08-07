@@ -51,7 +51,12 @@ namespace EthiopianCommunityWebsite.Controllers
 			return Ok(allEvents);
 		}
 
-
+		[HttpGet("AllUsersWithEventAndServices")]
+		public ActionResult GetInfoForAdmin()
+		{
+			var all = _eventVolunteerServiceRepository.GetAllUsersWithEventAndServices();
+			return Ok(all);
+		}
 		[HttpGet("{id}")]
 		public ActionResult GetSingleEvent(int id)
 		{

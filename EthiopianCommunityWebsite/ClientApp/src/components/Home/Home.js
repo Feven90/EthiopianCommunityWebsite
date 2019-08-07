@@ -34,7 +34,6 @@ class Home extends React.Component {
 
     return (
         <div>
-          {/* <div id="img-container"></div> */}
           <div className="image-text">
               <img src={HeaderImg} id="header-img" alt="header"></img>
             <div className="text-on-img">

@@ -12,7 +12,7 @@ namespace EthiopianCommunityWebsite.Data
 	{
 		const string ConnectionString = @"Server=localhost\SQLEXPRESS;Database=EthiopianCommunity;Trusted_Connection=True;";
 
-		public EventVolunteerService AddEventVolunteerService(int eventId, int? userVolunteerId,int volunteerServiceId)
+		public EventVolunteerService AddEventVolunteerService(int eventId, int? userVolunteerId, int volunteerServiceId)
 		{
 			using (var db = new SqlConnection(ConnectionString))
 			{
@@ -25,7 +25,7 @@ namespace EthiopianCommunityWebsite.Data
 					{
 						eventId,
 						userVolunteerId,
-						volunteerServiceId 
+						volunteerServiceId
 					});
 
 
@@ -66,6 +66,21 @@ namespace EthiopianCommunityWebsite.Data
 			}
 			throw new Exception("Could not update user");
 		}
-	}
+		public IEnumerable<EventVolunteerService> GetAllUsersWithEventAndServices()
+		{
+			using (var db = new SqlConnection(ConnectionString))
+			{
+				var allServices = db.Query<EventVolunteerService>(@"Select u.FirstName, u.LastName, u.PhoneNumber, u.Email,										  e.EventName,vs.VolunteerServiceType
+                                                    from [EventVolunteerService] evs 
+													join [UserVolunteer] uv on evs.userVolunteerId = uv.id
+													join [user] u on u.id = uv.UserId
+													join [VolunteerService] vs on uv.volunteerServiceId = vs.id
+													join [event] e on evs.eventId = e.id"
+													   ).ToList();
 
+				return allServices;
+			}
+		}
+
+	}
 }
