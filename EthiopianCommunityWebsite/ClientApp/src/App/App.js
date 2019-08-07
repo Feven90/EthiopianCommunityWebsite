@@ -13,6 +13,7 @@ import fbConnection from '../firebaseRequests/connection';
 import autheRequests from '../firebaseRequests/auth';
 import './App.scss';
 import userRequest from '../helpers/data/userRequest';
+import AdminPage from '../components/AdminPage/AdminPage';
 
 
 fbConnection();
@@ -81,11 +82,6 @@ class App extends React.Component {
         let uid = autheRequests.getUid();
         userRequest.getUserProfile(uid).then((user) => {
             this.setState({ user });
-            console.log(user);
-//   paymentRequest.getPaymentInformation(user.id).then((paymentInfo) => {
-//     this.setState({ paymentInfo})
-//     console.log(user.id);
-// })
       });
       } else {
         this.setState({
@@ -95,13 +91,6 @@ class App extends React.Component {
     });
 }
 
-// getCustomerPayment = () => {
-//   const { user } = this.state;
-//   paymentRequest.getPaymentInformation(user.id).then((paymentInfo) => {
-//     this.setState({ paymentInfo})
-//     console.log(user.id);
-// })
-// }
   componentWillUnmount () {
     this.removeListener();
   }
@@ -123,6 +112,7 @@ class App extends React.Component {
               authed={this.state.authed}
               runAway={this.runAway}
               component={Login}
+              user={this}
             />
           <Route path="/" exact component={Login}/>  
           <PublicRoute
@@ -153,8 +143,7 @@ class App extends React.Component {
                   <PrivateRoute path='/userProfile' exact component={UserProfile} authed={this.state.authed} />
                   <PrivateRoute path='/home' exact component={Home} authed={this.state.authed} />
                   <PrivateRoute path='/event' exact component={Event} authed={this.state.authed} user={this.state.user} />
-
-                  {/* <PrivateRoute exact path="/checkout" authed={this.state.authed} component={props => <Checkout {...props} paymentInfo={paymentInfo}/>}/> */}
+                  <PrivateRoute path='/adminPage' exact component={AdminPage} authed={this.state.authed} user={this.state.user} />
                 </Switch>
           </div>
         </BrowserRouter>

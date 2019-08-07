@@ -43,7 +43,9 @@ class Event extends React.Component {
         services: [],
         showVolunteerServices: false,
        selectedServiceIds: [],
-       userSelectedServicesIds: []
+       userSelectedServicesIds: [],
+       eventId: 0,
+       singleEvent: {}
     }
 
     selectedEvent = (e) => {
@@ -51,6 +53,7 @@ class Event extends React.Component {
       this.setState({ eventId: value })
       console.log(value);
     }
+
 
     onOpenModal = () => {
       this.setState({ open: true });
@@ -84,9 +87,7 @@ class Event extends React.Component {
     }
     
     addUserVolunteerService = (userVolunteer) => {
-      userVolunteerRequest.postUserVolunteerRequest(userVolunteer). then(() => {
-
-      })
+      userVolunteerRequest.postUserVolunteerRequest(userVolunteer)
     }
     // addEventVolunteerService = (eventServices) => {
     //   eventServiceRequest.postEventVolunteerServiceRequest(eventServices).then(() => {
@@ -146,10 +147,14 @@ class Event extends React.Component {
     }
 
     RegistrationSubmit = (e) => {
-      e.preventDefault();
-      const userVolunteerInformation = {};
-      userVolunteerInformation.VolunteerServiceIds  = this.state.userSelectedServicesIds;
-      userVolunteerInformation.UserId = this.props.user.id;
+      //e.preventDefault();
+      const userVolunteerInformation = {
+        VolunteerServiceIds: this.state.userSelectedServicesIds,
+        UserId: this.props.user.id,
+        EventId: e.currentTarget.id
+      };
+      console.log(userVolunteerInformation.EventId);
+      console.log(this.state.singleEvent.id);
       this.addUserVolunteerService(userVolunteerInformation);
       this.setState({ userSelectedServicesIds: [] });
 
@@ -165,6 +170,11 @@ class Event extends React.Component {
 
     }
 
+    getSingleEvent = (eventId) => {
+      eventRequest.getSingleEvent(eventId).then((singleEvent) => {
+        this.setState({ singleEvent })
+      })
+    }
     UserCheckboxChangeHandler = (e) => {
       const userServiceId = e.target.id;
       const indexOfUserServiceId = this.state.userSelectedServicesIds.indexOf(userServiceId);
@@ -201,6 +211,7 @@ class Event extends React.Component {
               userCheckboxChangeHandler = {this.UserCheckboxChangeHandler}
               userSelectedServicesIds = {userSelectedServicesIds}
               RegistrationSubmit= {this.RegistrationSubmit}
+              getSingleEvent= {this.getSingleEvent}
             //   deleteOneProduct={this.deleteOneProduct}
             />
         ));

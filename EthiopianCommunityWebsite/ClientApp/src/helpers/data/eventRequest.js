@@ -12,4 +12,14 @@ const getEvents = () => new Promise((resolve, reject) => {
 
 const postEventRequest = (eventInfo) => axios.post(`http://localhost:50158/api/event/register`, eventInfo);
 
-export default { postEventRequest, getEvents };
+const getSingleEvent = eventId => new Promise((resolve, reject) => {
+  axios
+  .get(`http://localhost:50158/api/event/${eventId}`)
+    .then((res) => {
+      let event = res.data;
+      resolve(event);
+    })
+    .catch(err => reject(err));
+});
+
+export default { postEventRequest, getEvents, getSingleEvent };
