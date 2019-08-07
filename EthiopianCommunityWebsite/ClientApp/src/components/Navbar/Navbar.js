@@ -115,5 +115,5 @@ class Navbar extends React.Component {
         return {notLoggedIn}
       }
 }
-
+}
 export default Navbar;
