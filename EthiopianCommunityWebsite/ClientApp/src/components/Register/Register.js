@@ -12,7 +12,11 @@ const userInformation = {
   email: '',
   password: '',
   firstName: '',
-  lastName: ''
+  lastName: '',
+  state: '',
+  city: '',
+  zipCode: '',
+  phoneNumber: ''
 }
 class Register extends React.Component {
   state = {
@@ -26,6 +30,9 @@ class Register extends React.Component {
       const userInformation = { firstName: newUserInformation.firstName,
                         lastName: newUserInformation.lastName,
                         email: newUserInformation.email,
+                        phoneNumber: newUserInformation.phoneNumber,
+                        state: newUserInformation.state,
+                        city: newUserInformation.city,
                         userUid: newUserInformation.uid
                         }
       postUser.postUserRequest(userInformation);
@@ -58,6 +65,18 @@ class Register extends React.Component {
 
   passwordChange = e => {
     this.formFieldStringState('password', e);
+  }
+  stateChange = e => {
+    this.formFieldStringState('state', e);
+  }
+  cityChange = e => {
+    this.formFieldStringState('city', e);
+  }
+  zipCodeChange = e => {
+    this.formFieldStringState('zipCode', e);
+  }
+  phoneNumerChange = e => {
+    this.formFieldStringState('phoneNumber', e);
   }
 
   
@@ -115,6 +134,45 @@ class Register extends React.Component {
                   onChange={this.emailChange}
                 />
               <FormText>Please use a valid email address.</FormText>
+              </div>
+              <Label htmlFor="inputState" className="col-lg-12 m-1 control-label">
+                State:
+              </Label>
+              <div className="col-lg-12 mb-2">
+                <Input
+                  type="name"
+                  className="form-control"
+                  id="inputstate"
+                  placeholder="TN"
+                  value={newUserInformation.state}
+                  onChange={this.stateChange}
+                />
+              </div>
+              <Label htmlFor="inputLastName" className="col-lg-12 m-1 control-label">
+                City:
+              </Label>
+              <div className="col-lg-12 mb-2">
+                <Input
+                  type="name"
+                  className="form-control"
+                  id="inputCity"
+                  placeholder="Nashville"
+                  value={newUserInformation.city}
+                  onChange={this.cityChange}
+                />
+              </div>
+              <Label htmlFor="inputLastName" className="col-lg-12 m-1 control-label">
+                Phone Number
+              </Label>
+              <div className="col-lg-12 mb-2">
+                <Input
+                  type="name"
+                  className="form-control"
+                  id="inputPhone"
+                  placeholder="123-115-1387"
+                  value={newUserInformation.phoneNumber}
+                  onChange={this.phoneNumerChange}
+                />
               </div>
               <label htmlFor="inputPassword" className="col-lg-12 m-1 control-label">
                 Password:
