@@ -81,6 +81,18 @@ namespace EthiopianCommunityWebsite.Data
 				return allServices;
 			}
 		}
+		public IEnumerable<EventVolunteerService> GetAllUsersRegisteredEvents()
+		{
+			using (var db = new SqlConnection(ConnectionString))
+			{
+				var allServices = db.Query<EventVolunteerService>(@"Select u.FirstName, u.LastName, e.EventName
+                                                    from [EventVolunteerService] evs 
+													join [UserVolunteer] uv on evs.userVolunteerId = uv.id
+													join [Event] e on e.id = evs.eventId
+													join [user] u on u.id = uv.UserId").ToList();
 
+				return allServices;
+			}
+		}
 	}
 }

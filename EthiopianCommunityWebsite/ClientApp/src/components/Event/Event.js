@@ -47,7 +47,8 @@ class Event extends React.Component {
        eventId: 0,
        singleEvent: {},
        buttonTextChange: "Register",
-       registerIsClicked: false
+       registerIsClicked: false,
+       userEvents: []
     }
 
     selectedEvent = (e) => {
@@ -75,6 +76,7 @@ class Event extends React.Component {
         serviceRequest.getVolunteerService().then((services) => {
         this.setState({ services })
         });
+        this.getAllUsersEvents();
     }
 
     eventInfo = () => {
@@ -99,7 +101,12 @@ class Event extends React.Component {
     //   eventServiceRequest.postEventVolunteerServiceRequest(eventServices).then(() => {
     //   })
     // }
-
+    getAllUsersEvents = () => {
+      eventRequest.getAllUsersEvents().then((userEvents) => {
+        this.setState({ userEvents })
+        console.log(this.state.userEvents);
+      })
+    }
     getClickedCheckboxs = (e) => {
       var getId = e.target.id;
     }
