@@ -68,7 +68,7 @@ class Event extends React.Component {
         this.eventInfo();
         serviceRequest.getVolunteerService().then((services) => {
         this.setState({ services })
-        })
+        });
     }
 
     eventInfo = () => {

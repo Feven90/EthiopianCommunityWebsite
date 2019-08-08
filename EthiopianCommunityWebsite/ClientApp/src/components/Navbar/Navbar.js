@@ -9,8 +9,72 @@ class Navbar extends React.Component {
 
   
   render () {
-    const loggedInAdmin = (
-      <ul className="nav navbar-nav navbar-right">
+     const {authed, runAway, user} = this.props;
+     console.log(user);
+    const logoutClickEvent = () => {
+      authRequests.logoutUser();
+      runAway();
+    };
+    const navbar = () => {
+      if (authed && user.isAdmin) {
+        return (
+          <div className="Navbar">
+        <nav className="navbar navbar-inverse">
+          <div className="container-fluid">
+            <div className="navbar-header">
+              <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span className="sr-only">Toggle navigation</span>
+                <span className="icon-bar">Events</span>
+                <span className="icon-bar">Information</span>
+                <span className="icon-bar"></span>
+              </button>
+              <Link  to="/" className="navbar-brand">Ethiopian Community</Link>
+            </div>
+            <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1"></div>
+        <ul className="nav navbar-nav navbar-right">
+          <li>
+            <Link to="/userProfile">Profile</Link>
+          </li>
+          <li>
+            <Link to="/informationPage">Information Page</Link>
+          </li>
+          <li>
+            <Link to="/event">Events</Link>
+          </li>    
+          <li>
+            <Link to="/adminPage">Admin Page</Link>
+          </li>   
+          <li className="navbar-form">
+            <button
+              onClick={logoutClickEvent}
+              className="btn btn-danger"
+            >
+              <p className="logout">Logout</p>
+            </button>
+          </li>
+        </ul>
+        </div>
+        </nav>
+      </div>
+      );
+
+    }
+    if  (authed) {
+      return  (
+        <div className="Navbar">
+        <nav className="navbar navbar-inverse">
+          <div className="container-fluid">
+            <div className="navbar-header">
+              <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span className="sr-only">Toggle navigation</span>
+                <span className="icon-bar">Events</span>
+                <span className="icon-bar">Information</span>
+                <span className="icon-bar"></span>
+              </button>
+              <Link  to="/" className="navbar-brand">Ethiopian Community</Link>
+            </div>
+            <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1"></div>
+        <ul className="nav navbar-nav navbar-right">
         <li>
           <Link to="/userProfile">Profile</Link>
         </li>
@@ -19,7 +83,8 @@ class Navbar extends React.Component {
         </li>
         <li>
           <Link to="/event">Events</Link>
-        </li>      
+        </li>    
+        
         <li className="navbar-form">
           <button
             onClick={logoutClickEvent}
@@ -29,43 +94,16 @@ class Navbar extends React.Component {
           </button>
         </li>
       </ul>
-    );
+      </div>
+        </nav>
+      </div>
+      );
+    }
+  
+    
 
-    const loggedInUser = (
-    <div className="Navbar">
-      <nav className="navbar navbar-inverse">
-        <div className="container-fluid">
-          <div className="navbar-header">
-            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-              <span className="sr-only">Toggle navigation</span>
-              <span className="icon-bar">Events</span>
-              <span className="icon-bar">Information</span>
-              <span className="icon-bar"></span>
-            </button>
-            <Link  to="/" className="navbar-brand">Ethiopian Community</Link>
-          </div>
-          <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            {
-              {returnValue} (
-                <ul className="nav navbar-nav navbar-right">
-                    <li>
-                    <Link to="/informationPage">Information Page</Link>
-                  </li>
-                  <li>
-                    <Link to="/event">Events</Link>
-                  </li>
-                  <li>
-                    <Link to="/login">Login</Link>
-                  </li>
-                </ul>
-              )
-            }
-          </div>
-        </div>
-      </nav>
-    </div>);
-
-    const notLoggedIn = (
+if(!authed) {
+return (
       <div className="Navbar">
         <nav className="navbar navbar-inverse">
           <div className="container-fluid">
@@ -79,8 +117,7 @@ class Navbar extends React.Component {
               <Link  to="/" className="navbar-brand">Ethiopian Community</Link>
             </div>
             <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              {
-                {returnValue} (
+          
                   <ul className="nav navbar-nav navbar-right">
                        <li>
                       <Link to="/informationPage">Information Page</Link>
@@ -92,28 +129,21 @@ class Navbar extends React.Component {
                       <Link to="/login">Login</Link>
                     </li>
                   </ul>
-                )
-              }
+         
             </div>
           </div>
         </nav>
       </div>
     )
-    const {authed, runAway, user} = this.props;
-    const logoutClickEvent = () => {
-      authRequests.logoutUser();
-      runAway();
-    };
-
-      if (authed && user.isAdmin) {
-        return {loggedInAdmin}
-      }
-
-      if  (authed) {
-        return {loggedInUser}
-      } else {
-        return {notLoggedIn}
-      }
+            
+}
+    }
+    return (
+      <div>
+          {navbar()}
+      </div>
+  
+    )
 }
 }
 export default Navbar;

@@ -112,7 +112,7 @@ class App extends React.Component {
               authed={this.state.authed}
               runAway={this.runAway}
               component={Login}
-              user={this}
+              user={user}
             />
           <Route path="/" exact component={Login}/>  
           <PublicRoute
@@ -137,6 +137,7 @@ class App extends React.Component {
             <MyNavbar
               authed={this.state.authed}
               runAway={this.runAway}
+              user={user}
             />
                 <Switch>
                   <Route path="/" exact component={Home}/>
