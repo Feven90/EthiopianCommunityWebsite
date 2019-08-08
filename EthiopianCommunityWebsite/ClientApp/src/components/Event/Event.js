@@ -15,6 +15,7 @@ import './Event.scss';
 import EventItem from '../EventItem/EventItem';
 import { Link } from 'react-router-dom';
 import HeaderImg from "../../Images/community1.jpg";
+import MembersAttendingEvent from '../MembersAttendingEvent/MembersAttendingEvent';
 
 // import './Home.scss';
 const defaultEvent = {
@@ -213,11 +214,15 @@ class Event extends React.Component {
     }
 
     render() {
-        const { open, addNewEvent, events, buttonTextChange, registerIsClicked, addNewServiceType, services, showVolunteerServices, selectedServiceIds, userSelectedServicesIds } = this.state;
+        const { open, userEvents, addNewEvent, events, buttonTextChange, registerIsClicked, addNewServiceType, services, showVolunteerServices, selectedServiceIds, userSelectedServicesIds } = this.state;
         console.log(services);
         const { user, authed } = this.props;
 
-
+        const eventAttendies = userEvents.map(userEvent => (
+          <MembersAttendingEvent 
+            userEvent={userEvent}
+          />
+        ))
         const eventItem = events.map(event => (
             <EventItem
             event={event}
@@ -247,11 +252,11 @@ class Event extends React.Component {
         })
         
         return (
-            <div>
+            <div className="wrap-event-user">
                 {
                   (user.isAdmin) ? (
                         <div className="addPayment">
-                        <button onClick={this.onOpenModal} className="btn" id="buttonOh">Add my Event</button>
+                        <button onClick={this.onOpenModal} className="btn" id="buttonOh">Add Event</button>
                      <Modal open={open} onClose={this.onCloseModal} center>
                      <div className="Register">
                              <div id="">                              {/* login-form */}
@@ -342,10 +347,11 @@ class Event extends React.Component {
                      )
                         : 
                         (
-                            <h1>All Events</h1>
+                            <h1 className="our-events">Our Events</h1>
                         )
                 }
-                  { eventItem}
+                  { eventItem}                   {eventAttendies}
+
             </div>
         )
     }
