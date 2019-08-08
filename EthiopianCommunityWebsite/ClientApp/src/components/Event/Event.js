@@ -76,7 +76,7 @@ class Event extends React.Component {
         serviceRequest.getVolunteerService().then((services) => {
         this.setState({ services })
         });
-        this.getAllUsersEvents();
+        this.getAllUsersEvents(this.eventId);
     }
 
     eventInfo = () => {
@@ -101,8 +101,8 @@ class Event extends React.Component {
     //   eventServiceRequest.postEventVolunteerServiceRequest(eventServices).then(() => {
     //   })
     // }
-    getAllUsersEvents = () => {
-      eventRequest.getAllUsersEvents().then((userEvents) => {
+    getAllUsersEvents = (eventId) => {
+      eventRequest.getAllUsersEvents(eventId).then((userEvents) => {
         this.setState({ userEvents })
         console.log(this.state.userEvents);
       })
