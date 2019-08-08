@@ -45,7 +45,9 @@ class Event extends React.Component {
        selectedServiceIds: [],
        userSelectedServicesIds: [],
        eventId: 0,
-       singleEvent: {}
+       singleEvent: {},
+       buttonTextChange: "Register",
+       registerIsClicked: false
     }
 
     selectedEvent = (e) => {
@@ -54,7 +56,11 @@ class Event extends React.Component {
       console.log(value);
     }
 
-
+    disableButton = () => {
+      if(this.props.RegistrationSubmit == "You are registered"){
+          this.setState({ registerIsClicked: true})
+      }
+  }
     onOpenModal = () => {
       this.setState({ open: true });
     };
@@ -148,6 +154,7 @@ class Event extends React.Component {
 
     RegistrationSubmit = (e) => {
       //e.preventDefault();
+      this.setState({ buttonTextChange: "You are registered" });
       const userVolunteerInformation = {
         VolunteerServiceIds: this.state.userSelectedServicesIds,
         UserId: this.props.user.id,
@@ -155,6 +162,7 @@ class Event extends React.Component {
       };
       console.log(userVolunteerInformation.EventId);
       console.log(this.state.singleEvent.id);
+      this.disableButton()
       this.addUserVolunteerService(userVolunteerInformation);
       this.setState({ userSelectedServicesIds: [] });
 
@@ -197,7 +205,7 @@ class Event extends React.Component {
     }
 
     render() {
-        const { open, addNewEvent, events, addNewServiceType, services, showVolunteerServices, selectedServiceIds, userSelectedServicesIds } = this.state;
+        const { open, addNewEvent, events, buttonTextChange, registerIsClicked, addNewServiceType, services, showVolunteerServices, selectedServiceIds, userSelectedServicesIds } = this.state;
         console.log(services);
         const { user, authed } = this.props;
 
@@ -212,6 +220,8 @@ class Event extends React.Component {
               userSelectedServicesIds = {userSelectedServicesIds}
               RegistrationSubmit= {this.RegistrationSubmit}
               getSingleEvent= {this.getSingleEvent}
+              buttonTextChange= {buttonTextChange}
+              registerIsClicked={registerIsClicked}
             //   deleteOneProduct={this.deleteOneProduct}
             />
         ));
