@@ -19,24 +19,22 @@ class Navbar extends React.Component {
       if (authed && user.isAdmin) {
         return (
           <div className="Navbar">
-        <nav className="navbar navbar-inverse">
-          <div className="container-fluid">
-            <div className="navbar-header">
-              <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span className="sr-only">Toggle navigation</span>
-                <span className="icon-bar">Events</span>
-                <span className="icon-bar">Information</span>
-                <span className="icon-bar"></span>
-              </button>
-              <Link  to="/" className="navbar-brand">Ethiopian Community</Link>
-            </div>
-            <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1"></div>
-        <ul className="nav navbar-nav navbar-right">
+          <nav className="navbar navbar-inverse">
+            <div className="container-fluid">
+              <div className="navbar-header">
+                <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                  <span className="sr-only">Toggle navigation</span>
+                  <span className="icon-bar">Events</span>
+                  <span className="icon-bar">Information</span>
+                  <span className="icon-bar"></span>
+                </button>
+                <Link  to="/" className="navbar-brand">Ethiopian Community</Link>
+              </div>
+              <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            
+            <ul className="nav navbar-nav navbar-right">
           <li>
             <Link to="/userProfile">Profile</Link>
-          </li>
-          <li>
-            <Link to="/informationPage">Information Page</Link>
           </li>
           <li>
             <Link to="/event">Events</Link>
@@ -53,6 +51,7 @@ class Navbar extends React.Component {
             </button>
           </li>
         </ul>
+        </div>
         </div>
         </nav>
       </div>
@@ -73,13 +72,11 @@ class Navbar extends React.Component {
               </button>
               <Link  to="/" className="navbar-brand">Ethiopian Community</Link>
             </div>
-            <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1"></div>
-        <ul className="nav navbar-nav navbar-right">
+            <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          
+          <ul className="nav navbar-nav navbar-right">
         <li>
           <Link to="/userProfile">Profile</Link>
-        </li>
-        <li>
-          <Link to="/informationPage">Information Page</Link>
         </li>
         <li>
           <Link to="/event">Events</Link>
@@ -95,6 +92,7 @@ class Navbar extends React.Component {
         </li>
       </ul>
       </div>
+          </div>
         </nav>
       </div>
       );

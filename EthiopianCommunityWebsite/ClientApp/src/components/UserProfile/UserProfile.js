@@ -61,14 +61,17 @@ export class UserProfile extends React.Component {
     const { user, isEditing, editId } = this.state;
 
     return (
-      <div className="container customerProfile">
+      <div className="container card customerProfile">
         <div class="welcome">
-            <h1>Welcome <b>{user.firstName}</b></h1>
+            <h1>Welcome <b>{user.firstName} {user.lastName}</b></h1>
             {/* <div class="card-body"> */}
-                <h3>{user.address}</h3>
-                <h5>{user.city}, {user.state} {user.zip}</h5>
-                <p>{user.email}</p>
+                <h4>Address: {user.city}, {user.state} {user.zip}</h4>
+                <h4>Phone Number: {user.phoneNumber}</h4>
+                <h4>Email: {user.email}</h4>
+               <h2>Events You have Registered </h2> 
+
         </div>
+        
         {/* <EditUserForm
           user={user}
           isEditing={isEditing}
