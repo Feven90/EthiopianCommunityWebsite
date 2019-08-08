@@ -23,9 +23,9 @@ const getAllUsersEvents = () => new Promise((resolve, reject) => {
     .catch(err => reject(err));
 });
 
-const getSingleEvent = eventId => new Promise((resolve, reject) => {
+const getUserEvents = userId => new Promise((resolve, reject) => {
   axios
-  .get(`http://localhost:50158/api/event/${eventId}`)
+  .get(`http://localhost:50158/api/event/${userId}`)
     .then((res) => {
       let event = res.data;
       resolve(event);
@@ -33,4 +33,4 @@ const getSingleEvent = eventId => new Promise((resolve, reject) => {
     .catch(err => reject(err));
 });
 
-export default { postEventRequest, getEvents, getSingleEvent, getAllUsersEvents };
+export default { postEventRequest, getEvents, getUserEvents, getAllUsersEvents };

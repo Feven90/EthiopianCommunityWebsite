@@ -187,11 +187,7 @@ class Event extends React.Component {
 
     }
 
-    getSingleEvent = (eventId) => {
-      eventRequest.getSingleEvent(eventId).then((singleEvent) => {
-        this.setState({ singleEvent })
-      })
-    }
+    
     UserCheckboxChangeHandler = (e) => {
       const userServiceId = e.target.id;
       const indexOfUserServiceId = this.state.userSelectedServicesIds.indexOf(userServiceId);
