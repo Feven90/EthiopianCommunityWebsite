@@ -40,7 +40,7 @@ class EventItem extends React.Component {
                     
                    <h3>Event Services: {eventServicesList}</h3>
                     <Button id={event.id} onClick={this.props.RegistrationSubmit} disabled={registerIsClicked}>
-                        {buttonTextChange}
+                        register
                     </Button> 
                 </div>
                     <div className="product-description">

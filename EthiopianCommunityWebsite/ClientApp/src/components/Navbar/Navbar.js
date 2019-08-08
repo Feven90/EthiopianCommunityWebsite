@@ -36,9 +36,6 @@ class Navbar extends React.Component {
             <Link to="/userProfile">Profile</Link>
           </li>
           <li>
-            <Link to="/informationPage">Information Page</Link>
-          </li>
-          <li>
             <Link to="/event">Events</Link>
           </li>    
           <li>
@@ -77,9 +74,6 @@ class Navbar extends React.Component {
         <ul className="nav navbar-nav navbar-right">
         <li>
           <Link to="/userProfile">Profile</Link>
-        </li>
-        <li>
-          <Link to="/informationPage">Information Page</Link>
         </li>
         <li>
           <Link to="/event">Events</Link>

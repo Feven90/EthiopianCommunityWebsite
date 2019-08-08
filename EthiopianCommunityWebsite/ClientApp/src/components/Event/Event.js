@@ -162,7 +162,8 @@ class Event extends React.Component {
       };
       console.log(userVolunteerInformation.EventId);
       console.log(this.state.singleEvent.id);
-      this.disableButton()
+      this.disableButton();
+      this.setState({ registerIsClicked: true})
       this.addUserVolunteerService(userVolunteerInformation);
       this.setState({ userSelectedServicesIds: [] });
 
