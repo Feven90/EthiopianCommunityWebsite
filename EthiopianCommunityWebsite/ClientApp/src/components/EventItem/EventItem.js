@@ -14,11 +14,10 @@ class EventItem extends React.Component {
         var getId = e.target.value;
 
     }
-
     
 
     render() {
-        const { event, user, userCheckboxChangeHandler, userSelectedServicesIds, getSingleEvent} = this.props;
+        const { event, user, userCheckboxChangeHandler, userSelectedServicesIds, getSingleEvent, buttonTextChange, registerIsClicked} = this.props;
         console.log(event);
         console.log(event.eventVolunteerService);
 
@@ -40,7 +39,9 @@ class EventItem extends React.Component {
                     <h3>Address: {event.address}</h3>
                     
                    <h3>Event Services: {eventServicesList}</h3>
-                    <Button id={event.id} onClick={this.props.RegistrationSubmit}>Register</Button> 
+                    <Button id={event.id} onClick={this.props.RegistrationSubmit} disabled={registerIsClicked}>
+                        {buttonTextChange}
+                    </Button> 
                 </div>
                     <div className="product-description">
                 </div>
