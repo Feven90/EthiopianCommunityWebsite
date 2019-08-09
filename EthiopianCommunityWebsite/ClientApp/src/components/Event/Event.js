@@ -47,8 +47,7 @@ class Event extends React.Component {
        userSelectedServicesIds: [],
        eventId: 0,
        singleEvent: {},
-       buttonTextChange: "Register",
-       registerIsClicked: false,
+       //registerIsClicked: false,
        userEvents: []
     }
 
@@ -168,7 +167,6 @@ class Event extends React.Component {
 
     RegistrationSubmit = (e) => {
       //e.preventDefault();
-      this.setState({ buttonTextChange: "You are registered" });
       const userVolunteerInformation = {
         VolunteerServiceIds: this.state.userSelectedServicesIds,
         UserId: this.props.user.id,
@@ -236,7 +234,7 @@ class Event extends React.Component {
               RegistrationSubmit= {this.RegistrationSubmit}
               getSingleEvent= {this.getSingleEvent}
               buttonTextChange= {buttonTextChange}
-              registerIsClicked={registerIsClicked}
+              //registerIsClicked={registerIsClicked}
             //   deleteOneProduct={this.deleteOneProduct}
             />
         ));
@@ -267,8 +265,10 @@ class Event extends React.Component {
             <div className="wrap-event-user">
                 {
                   (user.isAdmin) ? (
-                        <div className="addPayment">
-                        <button onClick={this.onOpenModal} className="btn" id="buttonOh">Add Event</button>
+                        <div className="addEvent">
+                          <div className="btn admin-add-event-button" >
+                        <button onClick={this.onOpenModal} id="button-add">Add Event</button>
+                        </div>
                      <Modal open={open} onClose={this.onCloseModal} center>
                      <div className="Register">
                              <div id="">                              {/* login-form */}

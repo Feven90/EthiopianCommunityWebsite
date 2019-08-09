@@ -57,7 +57,14 @@ label {
     display: flex;
     justify-content: center;
 }
-
+#button-add {
+    width:80px;
+}
+.admin-add-event-button {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+}
 .toggle-form-div {
     display: flex;
     flex-direction: row;

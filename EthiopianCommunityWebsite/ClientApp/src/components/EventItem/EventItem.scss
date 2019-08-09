@@ -1,9 +1,16 @@
 .event-item {
     width: 800px;
-    background-color: antiquewhite;
+    background-color: gray;
     align-items: center;
     display: inline-block;
     align-content: center;
     margin-bottom: 20px;
     margin-left: 500px;
+    color: #000;
+}
+.event-name {
+    text-align: center;
+}
+.register-for-event {
+    justify-content: center;
 }
