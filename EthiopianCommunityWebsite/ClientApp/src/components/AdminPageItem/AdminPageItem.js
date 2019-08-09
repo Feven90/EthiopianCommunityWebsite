@@ -11,9 +11,11 @@ class AdminPageItem extends React.Component {
             <div>
 
                 { <div className="event-item card">
-                    <h1>{userEventService.firstName}</h1>
-                    <h3>Time: {userEventService.lastName}</h3>
-                    <h3>Address: {userEventService.volunteerServiceType}</h3>
+                    <h2>Event: {userEventService.eventName}</h2>
+                    <h2>Name: {userEventService.firstName} {userEventService.lastName}</h2>
+                    <h3>Email: {userEventService.email} </h3>
+                    <h3>Phone Number: {userEventService.phoneNumber} </h3>
+                    <h3>Volunteer Service: {userEventService.volunteerServiceType}</h3>
                   
                 </div> }
                 
