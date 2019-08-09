@@ -105,7 +105,7 @@ namespace EthiopianCommunityWebsite.Data
 													join [Event] e on e.id = evs.eventId
 													join [user] u on u.id = uv.UserId
 													Group By e.EventName, e.EventName, u.FirstName, u.LastName
-													Where u.id=@userId").ToList();
+													Where u.id=@id").ToList();
 
 				return allServices;
 			}
