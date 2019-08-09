@@ -40,18 +40,18 @@ export class UserProfile extends React.Component {
   //   });
   // }
   getUseuserIdrEvents = (userId) => {
-    eventRequest.getUserEvents().then((userEvents) => {
+    eventRequest.getUserEvents(userId).then((userEvents) => {
       this.setState({ userEvents })
     })
   }
 
   
   componentDidMount() {
-    const { user, userEvents} = this.state;
+    const { user, userEvents} = this.props;
     // let uid = autheRequests.getUid();
     // this.getCustomer(uid);
     // this.setState({ isEditing: true, editId: uid })
-    this.getUseuserIdrEvents(user.id);
+    //this.getUseuserIdrEvents(user.id);
   }
   
   // componentWillUnmount() {
@@ -68,15 +68,15 @@ export class UserProfile extends React.Component {
   // }
 
   render() {
-    const { user, userEvents } = this.state;
-
-    const eventServicesList = userEvents.map((userEvent,i) => {
-      return (
-        <label key={i}>
-          <h4>{userEvent.volunteerServiceType}</h4>
-        </label>
-      );
-    })
+    const { user, userEvents } = this.props;
+console.log(userEvents);
+    // const eventServicesList = userEvents.map((userEvent,i) => {
+    //   return (
+    //     <label key={i}>
+    //       <h4>{userEvent.volunteerServiceType}</h4>
+    //     </label>
+    //   );
+    // })
 
     return (
       <div className="container card customerProfile">
@@ -87,7 +87,7 @@ export class UserProfile extends React.Component {
                 <h4>Phone Number: {user.phoneNumber}</h4>
                 <h4>Email: {user.email}</h4>
                <h2>Events You have Registered </h2> 
-               <div>{eventServicesList}</div>
+               {/* <div>{eventServicesList}</div> */}
 
         </div>
         

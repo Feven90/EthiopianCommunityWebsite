@@ -1,0 +1,19 @@
+.container{
+    display: flex;
+    justify-content: center;
+    color: black;
+    background-color: gray;
+    border-radius: 2rem;
+    width: 700px;
+    padding: 20px;
+}
+
+.register-submit {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.alreadyAccount {
+    margin: 10px;
+}

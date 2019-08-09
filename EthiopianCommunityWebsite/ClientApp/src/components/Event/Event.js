@@ -90,10 +90,9 @@ class Event extends React.Component {
     //     })
     // }
 
-    addEvent = (event) => {
-      eventRequest.postEventRequest(event).then(() => {
-      })
-    }
+    // addEvent = (event) => {
+    //   eventRequest.postEventRequest(event);
+    // }
     
     addUserVolunteerService = (userVolunteer) => {
       userVolunteerRequest.postUserVolunteerRequest(userVolunteer)
@@ -154,10 +153,17 @@ class Event extends React.Component {
       console.log( this.props.user.id);
       // const volunteerSerivceInformation = { ...this.state.addNewServiceType}
       eventInformation.SelectedServiceIds = this.state.selectedServiceIds;
-      this.addEvent(eventInformation);
+      // this.addEvent(eventInformation);
+      eventRequest.postEventRequest(eventInformation)
+      .then(() => {
+        eventRequest.getEvents().then((results) => { 
+          let eventArray = results;
+          this.onCloseModal();
+          this.setState({ events: eventArray });
+        })
+      })
      // this.addUserVolunteerService(eventInformation);
       // this.setState({ addNewServiceType: defaultService})
-      this.setState({ addNewEvent:defaultEvent });
     }
 
     RegistrationSubmit = (e) => {
@@ -222,7 +228,7 @@ class Event extends React.Component {
         const eventItem = events.map(event => (
             <EventItem
             event={event}
-              key={events.id}
+              key={event.id}
               user={user}
               selectedEvent={this.selectedEvent}
               userCheckboxChangeHandler = {this.UserCheckboxChangeHandler}
@@ -241,8 +247,18 @@ class Event extends React.Component {
         const serviceCheckboxes = services.map((service,i) => {
           return (
             <label key={i}>
-              <h4>{service.volunteerServiceType}</h4>
-              <Input type="checkbox" id={service.id} className="get-service" name={service.volunteerServiceType} checked={selectedServiceIds.indexOf(`${service.id}`) != -1} onChange={this.handleCheckboxChange} />
+              <div className="toggle-form-div">
+                <div>
+                  <h4>{service.volunteerServiceType}</h4>
+                </div>
+                <div className="checkbox-div">
+                  <Input type="checkbox" id={service.id}
+                    className="get-service" name={service.volunteerServiceType}
+                    checked={selectedServiceIds.indexOf(`${service.id}`) != -1}
+                    onChange={this.handleCheckboxChange}
+                  />
+                </div>
+              </div>
             </label>
           );
         })
@@ -257,15 +273,15 @@ class Event extends React.Component {
                      <div className="Register">
                              <div id="">                              {/* login-form */}
                                <h1 className="text-center">Add Event</h1>
-                               <form className="form-horizontal col-sm-6 ">
+                               <form className="form-horizontal">
                                  <div className="form-group">
-                                   <label htmlFor="inputName" className=" control-label">
-                                     Event Name:
-                                   </label>
-                                   <div className="col-sm-8">
+                                   <div className="label-and-input">
+                                    <label htmlFor="inputName" className="modal-label control-label">
+                                      Event Name:
+                                    </label>
                                      <input
                                        type="name"
-                                       className="form-control"
+                                       className="modal-input form-control"
                                        id="inputEmail"
                                        placeholder="Christmass"
                                        value={addNewEvent.eventName}
@@ -274,13 +290,13 @@ class Event extends React.Component {
                                    </div>
                                  </div>
                                  <div className="form-group">
-                                   <label htmlFor="inputAddress" className="control-label">
-                                    Address:
-                                   </label>
-                                   <div className="col-sm-8">
+                                   <div className="label-and-input">
+                                    <label htmlFor="inputAddress" className="modal-label control-label">
+                                      Address:
+                                    </label>
                                      <input
                                        type="name"
-                                       className="form-control"
+                                       className="modal-input form-control"
                                        id="inputAddress"
                                        placeholder="3324 Edge Moor Dr, Nashville, 37014 "
                                        value={addNewEvent.address}
@@ -289,13 +305,13 @@ class Event extends React.Component {
                                    </div>
                                  </div>
                                  <div className="form-group">
-                                   <label htmlFor="inputLastName" className="control-label">
-                                     Time:
-                                   </label>
-                                   <div className="col-sm-8">
+                                   <div className="label-and-input">
+                                    <label htmlFor="inputLastName" className="modal-label control-label">
+                                      Time:
+                                    </label>
                                      <input
                                        type="name"
-                                       className="form-control"
+                                       className="modal-input form-control"
                                        id="inputEmail"
                                        placeholder="2:00 pm"
                                        value={addNewEvent.time}
@@ -303,32 +319,25 @@ class Event extends React.Component {
                                      />
                                    </div>
                                  </div>
-                                 <button type="button" onClick={this.showOrHideForm} id="toggle-form">Toggle Form!</button>
+                                 
+                                 <div id="toggle-form-div">
+                                    <button type="button" 
+                                      className="btn btn-primary"
+                                      onClick={this.showOrHideForm}
+                                      id="toggle-form">Add Voluntary Services!
+                                    </button>
+                                 </div>
 { (showVolunteerServices) ?
 (                                 <div id="volunteer-services">
-                                    {/* <label htmlFor="inputLastName" className="control-label">
-                                        volunteer Service:
-                                    </label>
-                                   <div className="">
-                                     <input
-                                       type="name"
-                                       className="form-control"
-                                       id="inputText"
-                                       placeholder="teaching"
-                                       value={addNewServiceType.volunteerServiceType}
-                                       onChange={this.volunteerServiceChange}
-                                     />      
-                                     </div> */}
                                      {serviceCheckboxes}
-                                     {/* <Input type="checkbox" value={this.state.check} onChange={this.checkBoxValue}>{serviceitem}</Input>                            */}
                                  </div>
 ) : ("")
 }
                                  <div className="form-group">
-                                   <div className="col-sm-12">
+                                   <div className="add-event-submit-div">
                                      <Button
                                        type="submit"
-                                       className="btn btn-default col-xs-12"
+                                       className="btn btn-success add-event-submit"
                                        onClick={this.formSubmit}
                                      >
                                        Add Event 

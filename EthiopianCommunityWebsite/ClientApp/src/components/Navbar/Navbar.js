@@ -43,12 +43,14 @@ class Navbar extends React.Component {
             <Link to="/adminPage">Admin Page</Link>
           </li>   
           <li className="navbar-form">
-            <button
-              onClick={logoutClickEvent}
-              className="btn btn-danger"
-            >
-              <p className="logout">Logout</p>
-            </button>
+            <Link to="/">
+              <button
+                onClick={logoutClickEvent}
+                className="btn btn-danger"
+              >
+                <p className="logout">Logout</p>
+              </button>
+            </Link>
           </li>
         </ul>
         </div>
@@ -117,12 +119,7 @@ return (
             <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           
                   <ul className="nav navbar-nav navbar-right">
-                       <li>
-                      <Link to="/informationPage">Information Page</Link>
-                    </li>
-                    <li>
-                      <Link to="/event">Events</Link>
-                    </li>
+                    
                     <li>
                       <Link to="/login">Login</Link>
                     </li>

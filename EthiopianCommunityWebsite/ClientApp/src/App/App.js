@@ -141,7 +141,7 @@ class App extends React.Component {
             />
                 <Switch>
                   <Route path="/" exact component={Home}/>
-                  <PrivateRoute path='/userProfile' exact component={UserProfile} authed={this.state.authed} />
+                  <PrivateRoute path='/userProfile' exact component={UserProfile} authed={this.state.authed} user={this.state.user}/>
                   <PrivateRoute path='/home' exact component={Home} authed={this.state.authed} />
                   <PrivateRoute path='/event' exact component={Event} authed={this.state.authed} user={this.state.user} />
                   <PrivateRoute path='/adminPage' exact component={AdminPage} authed={this.state.authed} user={this.state.user} />
