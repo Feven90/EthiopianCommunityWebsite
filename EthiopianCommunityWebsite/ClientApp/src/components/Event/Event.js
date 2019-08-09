@@ -355,7 +355,11 @@ class Event extends React.Component {
                             <h1 className="our-events">Our Events</h1>
                         )
                 }
-                  { eventItem}                   {eventAttendies}
+                  <div>{ eventItem}  </div>                 
+                  <div className="members-events">
+                     <h1>Members Attending Event</h1>
+                    {eventAttendies}
+                  </div>
 
             </div>
         )

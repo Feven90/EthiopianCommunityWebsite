@@ -1,12 +1,14 @@
 .event-item {
     width: 800px;
     background-color: gray;
-    align-items: center;
+    // align-items: center;
     display: inline-block;
-    align-content: center;
+    // align-content: center;
     margin-bottom: 20px;
-    margin-left: 500px;
+    margin-left: 200px;
+    margin-right: 120px;
     color: #000;
+    border-radius: 2rem;
 }
 .event-name {
     text-align: center;

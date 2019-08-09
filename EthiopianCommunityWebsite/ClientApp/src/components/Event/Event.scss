@@ -11,10 +11,10 @@
 // .card {
 //     background-color: #fff;
 // }
-// .wrap-event-user{
-//     display: flex;
-//     flex-direction: row;
-// }
+.wrap-event-user{
+    display: flex;
+    flex-direction: row;
+}
 body {
     background-image: url("../../Images/communtiy2.jpg");
     opacity: 0.95;
@@ -89,4 +89,8 @@ label {
 #modal-container {
     display: flex;
     justify-content: center;
+}
+.members-events {
+    background-color: rgb(182, 177, 177);
+    height: max-content;
 }

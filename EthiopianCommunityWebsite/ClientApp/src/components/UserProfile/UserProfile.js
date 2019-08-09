@@ -39,8 +39,10 @@ export class UserProfile extends React.Component {
   //     this.setState({ user })
   //   });
   // }
-  getUseuserIdrEvents = (userId) => {
-    eventRequest.getUserEvents(userId).then((userEvents) => {
+  
+  getUserEvents = () => {
+    const { user } = this.props;
+    eventRequest.getUserEvents(user.id).then((userEvents) => {
       this.setState({ userEvents })
     })
   }
@@ -52,6 +54,8 @@ export class UserProfile extends React.Component {
     // this.getCustomer(uid);
     // this.setState({ isEditing: true, editId: uid })
     //this.getUseuserIdrEvents(user.id);
+    console.log(user.id);
+    //this.getUserEvents();
   }
   
   // componentWillUnmount() {
@@ -68,8 +72,9 @@ export class UserProfile extends React.Component {
   // }
 
   render() {
-    const { user, userEvents } = this.props;
-console.log(userEvents);
+    const { user} = this.props;
+    const {userEvents} = this.state;
+console.log(user.id);
     // const eventServicesList = userEvents.map((userEvent,i) => {
     //   return (
     //     <label key={i}>
@@ -79,9 +84,9 @@ console.log(userEvents);
     // })
 
     return (
-      <div className="container card customerProfile">
+      <div className="container  userProfile">
         <div class="welcome">
-            <h1>Welcome <b>{user.firstName} {user.lastName}</b></h1>
+            <h1 className="">Welcome {user.firstName} {user.lastName}</h1>
             {/* <div class="card-body"> */}
                 <h4>Address: {user.city}, {user.state} {user.zip}</h4>
                 <h4>Phone Number: {user.phoneNumber}</h4>
