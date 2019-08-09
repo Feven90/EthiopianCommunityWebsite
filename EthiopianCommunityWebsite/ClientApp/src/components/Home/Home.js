@@ -39,7 +39,7 @@ class Home extends React.Component {
             <div className="text-on-img">
             <h1 className="text">Ethiopian Community</h1>
             <h3 className="text subtitle">We are more beautiful together! </h3>
-            <h3 className="text subtitle"> lets grow as a community with love and respect to one another! </h3>
+            <h3 className="text subtitle"> lets grow as a community with love and care to one another! </h3>
             </div>
           </div>
         <div>

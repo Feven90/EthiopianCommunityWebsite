@@ -10,8 +10,8 @@ class MembersAttendingEvent extends React.Component {
 
         return(
                 <div className="user-event-item card">
-                    <h1 className="user-event">Event: {userEvent.eventName}</h1>
-                    <h3 className="user-event">Time: {userEvent.firstName} {userEvent.lastName}</h3>
+                    <h2 className="user-event">Event: {userEvent.eventName}</h2>
+                    <h3 className="user-event">Name: {userEvent.firstName} {userEvent.lastName}</h3>
                 </div> 
                 
         )};

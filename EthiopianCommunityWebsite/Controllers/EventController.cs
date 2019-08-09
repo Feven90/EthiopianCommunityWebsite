@@ -64,10 +64,10 @@ namespace EthiopianCommunityWebsite.Controllers
 			return Ok(all);
 		}
 		[HttpGet("{id}")]
-		public ActionResult GetSingleEvent(int id)
+		public ActionResult UserEvents(int id)
 		{
-			var singleEvent = _eventRepository.GetSingleEvent(id);
-			return Ok(singleEvent);
+			var userEvents = _eventVolunteerServiceRepository.UserEvents(id);
+			return Ok(userEvents);
 		}
 	}
 }

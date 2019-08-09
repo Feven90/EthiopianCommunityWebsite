@@ -17,14 +17,14 @@ class EventItem extends React.Component {
     
 
     render() {
-        const { event, user, userCheckboxChangeHandler, userSelectedServicesIds, getSingleEvent, buttonTextChange, registerIsClicked} = this.props;
+        const { event, user, userCheckboxChangeHandler, userSelectedServicesIds, getSingleEvent} = this.props;
         console.log(event);
         console.log(event.eventVolunteerService);
 
         const eventServicesList = event.eventVolunteerService.map((service,i) => {
             return (
               <label key={i}>
-                <h4>{service.volunteerServiceType}</h4>
+                <h4 className="event-name">{service.volunteerServiceType}</h4>
                 <Input type="checkbox" id={service.volunteerServiceId} className="get-service" name={service.volunteerServiceType} checked={userSelectedServicesIds.indexOf(`${service.volunteerServiceId}`) != -1} onChange={userCheckboxChangeHandler} />
               </label>
             );
@@ -34,14 +34,17 @@ class EventItem extends React.Component {
 
                 <div className="event-item card">
                     {/* <img className="cartProduct" src={customerProduct.image} alt="cart items"/> */}
-                    <h1>{event.eventName}</h1>
+                    <h1 className="event-name">Event: {event.eventName}</h1>
                     <h3>Time: {event.time}</h3>
                     <h3>Address: {event.address}</h3>
                     
                    <h3>Event Services: {eventServicesList}</h3>
-                    <Button id={event.id} onClick={this.props.RegistrationSubmit} disabled={registerIsClicked}>
-                        {buttonTextChange}
-                    </Button> 
+                   <div className="register-for-event">
+                        <Button id={event.id} onClick={this.props.RegistrationSubmit} >
+                            Register
+                        </Button> 
+                   </div>
+                   
                 </div>
                     <div className="product-description">
                 </div>

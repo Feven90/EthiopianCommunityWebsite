@@ -5,22 +5,92 @@
     padding: 15px;
     border: 1px solid #666;
     background: #fff;
+    height: max-content;
   }
 
 // .card {
 //     background-color: #fff;
 // }
-// .wrap-event-user{
-//     display: flex;
-//     flex-direction: row;
-// }
+.wrap-event-user{
+    display: flex;
+    flex-direction: row;
+}
 body {
     background-image: url("../../Images/communtiy2.jpg");
     opacity: 0.95;
     background-attachment: fixed;
+    background-size: cover;
+
 
 }
 .our-events {
     text-align: center;
     color: #000;
+}
+
+.label-and-input {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+}
+
+.modal-label {
+    display: flex;
+    justify-content: left;
+    width: 100px;
+    margin-left: 20px;
+}
+
+label {
+    align-self: left;
+}
+
+.modal-input {
+    width: 300px;
+}
+
+.add-event-submit {
+    width: 250px;
+}
+
+.add-event-submit-div {
+    display: flex;
+    justify-content: center;
+}
+#button-add {
+    width:80px;
+}
+.admin-add-event-button {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+.toggle-form-div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 300px;
+}
+
+.checkbox-div {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 5px;
+    margin-left: 10px;
+}
+
+#toggle-form-div {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+#modal-container {
+    display: flex;
+    justify-content: center;
+}
+.members-events {
+    background-color: rgb(182, 177, 177);
+    height: max-content;
 }
