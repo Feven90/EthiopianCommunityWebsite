@@ -47,7 +47,8 @@ export class AdminPage extends React.Component {
     ));
     
     return (
-      <div className="container customerProfile">
+      <div className=" customerProfile">
+        <h1>Members registered for events and services they will provide </h1>
         {adminPageItem}
       </div>
     )
