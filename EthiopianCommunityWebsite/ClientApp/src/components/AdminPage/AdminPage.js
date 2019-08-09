@@ -5,6 +5,7 @@ import adminRequest from '../../helpers/data/adminPageRequest';
 import autheRequests from '../../firebaseRequests/auth';
 // import EditUserForm from '../EditUserForm/EditUserForm';
 import AdminPageItem from '../AdminPageItem/AdminPageItem';
+import './AdminPage.scss';
 
  
 
@@ -47,7 +48,7 @@ export class AdminPage extends React.Component {
     ));
     
     return (
-      <div className=" customerProfile">
+      <div className="usersInfo">
         <h1>Members registered for events and services they will provide </h1>
         {adminPageItem}
       </div>
